@@ -12,16 +12,17 @@ const main = require("./controllers/WebCrawler/getRecipes")
 
 
 
-mongoose.connect("mongodb://localhost:27017/Gourmetrainer",{useNewUrlParser: true },()=>{
+mongoose.connect("mongodb://gourmetrainer:xjtlu215123@kyrie.top:27017/Gourmetrainer",{useNewUrlParser: true },()=>{
     console.log("database connected")
     // main()
     //     .then(() => console.log("all done"))
     //     .catch(err => console.log("!!!Main thread error:", err.errmsg))
 })
 
-Level.create({
-    user: "7464",
-    level: 3
+CookedHistory.create({
+    user: "5bebcde05706274c309ed41c",
+    recipe: "7464",
+    rating: 5
 },(error, level) =>{
     if (error) return console.log("error found:", error)
     return console.log("Level added:",level)
