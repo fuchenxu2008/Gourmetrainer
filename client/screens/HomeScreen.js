@@ -9,19 +9,27 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
+import { connect } from 'react-redux';
 import { MonoText } from '../components/StyledText';
+import { sayHi } from '../redux/actions/test';
 
-export default class HomeScreen extends React.Component {
+export class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Home',
   };
+
+  componentDidUpdate() {
+    this.props.sayHi()
+  }
 
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <Text>HIM</Text>
+          <View>
+            <Text style={styles.textStyle}>Name</Text>
+            <Text style={styles.textStyle}>{this.props.name}</Text>
+          </View>
         </ScrollView>
       </View>
     );
@@ -40,6 +48,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
   },
+  textStyle: {
+    fontSize: 30,
+    textAlign: 'center'
+  },
   // tabBarInfoContainer: {
   //   ...Platform.select({
   //     ios: {
@@ -54,3 +66,13 @@ const styles = StyleSheet.create({
   //   }),
   // },
 });
+
+const mapStateToProps = (state) => ({
+  name: state.testReducer.name,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  sayHi: () => dispatch(sayHi()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

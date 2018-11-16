@@ -5,7 +5,10 @@ import { ApolloProvider, Query } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 import gql from 'graphql-tag';
 import { Provider } from 'react-redux';
+import configureStore from './redux/store';
 import AppNavigator from './navigation/AppNavigator';
+
+const store = configureStore();
 
 const client = new ApolloClient({
   uri: 'https://fakerql.com/graphql'
@@ -36,30 +39,34 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <ApolloProvider client={client}>
-          <View style={styles.container}>
-            <Query
-              query={query}
-            >
-              {({ loading, error, data }) => {
-                if (loading) return <Text>Loading...</Text>;
-                if (error) return <Text>Error :</Text>;
+        <Provider store={store}>
+          <ApolloProvider client={client}>
+            {
+              // <View style={styles.container}>
+              //   <Query
+              //     query={query}
+              //   >
+              //     {({ loading, error, data }) => {
+              //       if (loading) return <Text>Loading...</Text>;
+              //       if (error) return <Text>Error :</Text>;
 
-                return data.allUsers.map(({ lastName }, i) => (
-                  <View key={i}>
-                    <Text>{lastName}</Text>
-                  </View>
-                ));
-              }}
-            </Query>
-          </View>
-          {
-          //   <View style={styles.container}>
-          //   {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          //   <AppNavigator persistenceKey={navigationPersistenceKey} />
-          // </View>
-          }
-        </ApolloProvider>
+              //       return data.allUsers.map(({ lastName }, i) => (
+              //         <View key={i}>
+              //           <Text>{lastName}</Text>
+              //         </View>
+              //       ));
+              //     }}
+              //   </Query>
+              // </View>
+            }
+            {
+              <View style={styles.container}>
+                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                <AppNavigator persistenceKey={navigationPersistenceKey} />
+              </View>
+            }
+          </ApolloProvider>
+        </Provider>
       );
     }
   }
@@ -95,7 +102,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
