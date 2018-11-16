@@ -1,7 +1,23 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
+import { ApolloProvider, Query } from 'react-apollo';
+import ApolloClient from 'apollo-boost';
+import gql from 'graphql-tag';
+import { Provider } from 'react-redux';
 import AppNavigator from './navigation/AppNavigator';
+
+const client = new ApolloClient({
+  uri: 'https://fakerql.com/graphql'
+});
+
+const query = gql`
+  {
+    allUsers {
+      lastName
+    }
+  }
+`;
 
 export default class App extends React.Component {
   state = {
@@ -20,10 +36,30 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator persistenceKey={navigationPersistenceKey} />
-        </View>
+        <ApolloProvider client={client}>
+          <View style={styles.container}>
+            <Query
+              query={query}
+            >
+              {({ loading, error, data }) => {
+                if (loading) return <Text>Loading...</Text>;
+                if (error) return <Text>Error :</Text>;
+
+                return data.allUsers.map(({ lastName }, i) => (
+                  <View key={i}>
+                    <Text>{lastName}</Text>
+                  </View>
+                ));
+              }}
+            </Query>
+          </View>
+          {
+          //   <View style={styles.container}>
+          //   {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          //   <AppNavigator persistenceKey={navigationPersistenceKey} />
+          // </View>
+          }
+        </ApolloProvider>
       );
     }
   }
@@ -59,5 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
