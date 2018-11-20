@@ -9,7 +9,7 @@ export default class SettingsScreen extends React.Component {
   render() {
     return (
       <View>
-        <Text>Settings</Text>
+        <Text onPress={() => this.props.navigation.navigate('Auth')}>Settings</Text>
       </View>
     );
   }
