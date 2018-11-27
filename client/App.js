@@ -14,21 +14,12 @@ const client = new ApolloClient({
   uri: 'https://fakerql.com/graphql'
 });
 
-const query = gql`
-  {
-    allUsers {
-      lastName
-    }
-  }
-`;
-
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
 
   render() {
-    const navigationPersistenceKey = __DEV__ ? "NavigationStateDEV" : null;
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -41,30 +32,10 @@ export default class App extends React.Component {
       return (
         <Provider store={store}>
           <ApolloProvider client={client}>
-            {
-              // <View style={styles.container}>
-              //   <Query
-              //     query={query}
-              //   >
-              //     {({ loading, error, data }) => {
-              //       if (loading) return <Text>Loading...</Text>;
-              //       if (error) return <Text>Error :</Text>;
-
-              //       return data.allUsers.map(({ lastName }, i) => (
-              //         <View key={i}>
-              //           <Text>{lastName}</Text>
-              //         </View>
-              //       ));
-              //     }}
-              //   </Query>
-              // </View>
-            }
-            {
-              <View style={styles.container}>
-                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                <AppNavigator persistenceKey={navigationPersistenceKey} />
-              </View>
-            }
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              <AppNavigator />
+            </View>
           </ApolloProvider>
         </Provider>
       );
