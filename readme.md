@@ -29,7 +29,7 @@ ObjectId.prototype.valueOf = function () {
 
 ## Resolver Coding
 
-> When coding the **top-level** Query resolvers, which is **Root Resolvers**, the ***first*** argument should be `undefined`. Can note it as `_` or `root` (whatever).
+When coding the **top-level** Query resolvers, which is **Root Resolvers**, the ***first*** argument should be `undefined`. Can note it as `_` or `root` (whatever).
 
 ``` Javascript
 Query: {

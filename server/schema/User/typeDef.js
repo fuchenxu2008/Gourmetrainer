@@ -1,9 +1,19 @@
 module.exports = `
-    type User {
-        _id: String
+    input UserInput {
         nickname: String
-        password: String
         email: String
+        password: String
         gender: String
+        avatar: String
+    }
+
+    type User {
+        _id: String!
+        nickname: String!
+        email: String!
+        password: String!
+        gender: String!
+        avatar: String
+        cookedHistories: [CookedHistory]!
     }
 `;

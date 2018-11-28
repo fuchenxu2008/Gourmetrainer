@@ -4,7 +4,7 @@ const RecipeModel = require('../Recipe/model');
 
 const resolvers = {
     Query: {
-        getCookedHistory: async (_, param) => await CookedHistoryModel.findOne(param),
+        getCookedHistory: async (_, { _id }) => await CookedHistoryModel.findById(_id),
         getCookedHistories: async (_, params) => await CookedHistoryModel.find(params),
     },
     CookedHistory: {

@@ -9,7 +9,11 @@ const CookedHistorySchema = mongoose.Schema({
         type: String,
         ref: 'Recipe'
     },
-    rating: Number
+    rating: Number,
+    time: {
+        type: String,
+        default: () => new Date().toLocaleString(),
+    }
 })
 
 const CookedHistory = mongoose.model("CookedHistory", CookedHistorySchema);

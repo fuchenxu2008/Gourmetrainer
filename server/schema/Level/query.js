@@ -1,4 +1,4 @@
-const LevelModel = require('../Level/model');
+const LevelModel = require('./model');
 const RecipeModel = require('../Recipe/model');
 
 const resolvers = {

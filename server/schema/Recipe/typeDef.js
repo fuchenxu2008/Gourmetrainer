@@ -1,17 +1,17 @@
 module.exports = `
     type Step {
         img: String
-        step: String
+        step: String!
     }
 
     type Recipe {
-        _id: String
-        title: String
-        tags: String
+        _id: String!
+        title: String!
+        tags: String!
         intro: String
-        ingredients: String
+        ingredients: String!
         burden: String
         albums: [String]
-        steps: [Step]
+        steps: [Step!]!
     }
 `;

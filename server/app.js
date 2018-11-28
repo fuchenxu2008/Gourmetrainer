@@ -17,7 +17,10 @@ ObjectId.prototype.valueOf = function () {
 
 const app = express();
 
-mongoose.connect(mongoUrl, { useNewUrlParser: true}, () => {
+mongoose.connect(mongoUrl, {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+        }, () => {
     console.log("√ [Database Connected]")
 });
 
