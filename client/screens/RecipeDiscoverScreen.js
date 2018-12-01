@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
-import RecipeSearchResult from '../components/RecipeSearchResult';
+import { StyleSheet, ScrollView, Text, View } from 'react-native';
+import SearchBar from '../components/SearchBar';
+import RecipeSearchResult from '../containers/RecipeSearchResult';
+import FeaturedRecipes from '../containers/FeaturedRecipes';
 
 export default class RecipeDiscoverScreen extends Component {
   static navigationOptions = {
-    title: 'Discover',
+    header: null,
   };
 
   state = {
-    search_title: '锅包肉'
+    search_title: ''
   }
 
   _handleInputChange = (title) => {
@@ -19,27 +21,38 @@ export default class RecipeDiscoverScreen extends Component {
     const { search_title } = this.state;
 
     return (
-      <ScrollView>
-        <TextInput
-          onChangeText={this._handleInputChange}
-          value={search_title}
-          style={styles.searchInput}
-        />
-        <RecipeSearchResult title={search_title} />
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.headerSection}>
+          <SearchBar
+            onInputChange={this._handleInputChange}
+            placeholder='What you wanna cook?'
+            keywords={this.state.search_title}
+          />
+        </View>
+        <RecipeSearchResult title={search_title} limit={5} />
+        <Text style={styles.heading}>Featured</Text>
+        <FeaturedRecipes limit={5} />
       </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  searchInput: {
-    width: '90%',
-    alignSelf: 'center',
-    backgroundColor: 'white',
-    padding: 20,
-    marginTop: 20,
-    marginBottom: 20,
-    fontSize: 25,
-    borderRadius: 10
+  scrollContainer: {
+    paddingTop: 40,
+    backgroundColor: 'rgb(250, 250, 250)',
+    paddingLeft: '6%',
+    paddingRight: '6%',
+  },
+  headerSection: {
+    // backgroundColor: 'blue',
+    // position: 'fixed'
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'color: rgb(70, 70, 70)',
+    marginBottom: 10,
+    // fontFamily: 'Iowan Old Style'
   }
 });

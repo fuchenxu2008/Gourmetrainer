@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
+import React, { Component } from 'react'
+import { View, Text } from 'react-native';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import RecipeCard from "./RecipeCard";
+import RecipeCard from "../components/RecipeCard";
 
-const SEARCH_RECIPES = gql `
-    query SearchRecipes($title: String, $tags: String) {
-        getRecipes(title: $title, tags: $tags) {
+const GET_FEATURED = gql`
+    query SearchRecipes($limit: Int) {
+        getRecipes(limit: $limit) {
             _id
             title
             albums
@@ -15,13 +15,12 @@ const SEARCH_RECIPES = gql `
     }
 `;
 
-export default class RecipeSearchResult extends Component {
-  render() {    
-    const { title, tags } = this.props;
-
+export default class FeaturedRecipes extends Component {
+  render() {
+    const { limit } = this.props;
     return (
         <View style={{ paddingBottom: 30 }}>
-            <Query query={SEARCH_RECIPES} variables={{ title, tags }}>
+            <Query query={GET_FEATURED} variables={{ limit }}>
                 {({ loading, error, data }) => {
                     if (loading) return <Text>No results</Text>;
                     if (error) return <Text>{`Error!: ${error}`}</Text>;

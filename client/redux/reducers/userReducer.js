@@ -1,13 +1,15 @@
+import { SET_LOGIN_TOKEN } from '../constants/user';
+
 const initialState = {
-    name: 'Steve'
+    user: null,
 };
 
 export default function testReducer(state = initialState, action) {
     switch (action.type) {
-        case 'SAY_HI':
+        case SET_LOGIN_TOKEN:
             return {
                 ...state,
-                name: 'Harold'
+                
             }
         default:
             return state;

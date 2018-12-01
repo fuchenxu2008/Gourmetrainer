@@ -1,41 +1,49 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
-export default class RecipeCard extends Component {
-  render() {
-    const { albums, title } = this.props.recipe;
-    
-    return (
-        <View elevation={13} style={styles.recipeCard}>
-            <Image source={{ uri: albums[0] }} style={styles.recipeImg} />
-            <Text style={styles.recipeTitle}>{title}</Text>
-        </View>
-    )
-  }
+class RecipeCard extends Component {
+    _handleClickRecipe = (_id) => {
+        this.props.navigation.navigate('RecipeDetail', { _id })
+    }
+
+    render() {
+        const { _id, albums, title } = this.props.recipe;
+        
+        return (
+            <TouchableOpacity elevation={13} style={styles.recipeCard} onPress={() => this._handleClickRecipe(_id)}>
+                <Image source={{ uri: albums[0] }} style={styles.recipeImg} />
+                <Text style={styles.recipeTitle}>{title}</Text>
+            </TouchableOpacity>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
     recipeCard: {
         flexDirection: 'row',
-        width: '80%',
+        width: '100%',
         padding: 10,
         borderRadius: 10,
         alignSelf: 'center',
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 8,
+        marginBottom: 8,
         backgroundColor: 'white',
-        shadowOffset:{  width: 1,  height: 2,  },
-        shadowColor: 'white',
-        shadowOpacity: 0.8,
+        shadowOffset:{  width: 0,  height: 5,  },
+        shadowColor: 'rgb(100, 100, 100)',
+        shadowOpacity: 0.1,
     },
     recipeImg: {
         borderRadius: 10,
-        width: 150,
-        height: 150,
+        width: 70,
+        height: 70,
     },
     recipeTitle: {
         marginLeft: 20,
-        fontSize: 20,
-        fontWeight: 'bold'
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'rgb(70, 70, 70)'
     }
 })
+
+export default withNavigation(RecipeCard);

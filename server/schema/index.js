@@ -10,7 +10,7 @@ const Root = /* GraphQL */`
     type Query {
         getUser(_id: String, email: String): User
         getRecipe(_id: String!): Recipe
-        getRecipes(title: String, tags: String): [Recipe]
+        getRecipes(title: String, tags: String, limit: Int): [Recipe]
         getLevel(_id: String, recipe: String): Level
         getLevels(level: Int!): [Level]
         getCookedHistory(_id: String!): CookedHistory

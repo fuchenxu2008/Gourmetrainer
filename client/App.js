@@ -10,7 +10,7 @@ import AppNavigator from './navigation/AppNavigator';
 const store = configureStore();
 
 const client = new ApolloClient({
-  uri: 'http://127.0.0.1:3333/graphql'
+  uri: 'http://10.8.204.12:3333/graphql'
 });
 
 export default class App extends React.Component {

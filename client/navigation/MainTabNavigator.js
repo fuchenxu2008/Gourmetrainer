@@ -3,14 +3,15 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-// import HomeScreen from '../screens/HomeScreen';
 import RecipeDiscoverScreen from '../screens/RecipeDiscoverScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AuthScreen from '../screens/AuthScreen';
+import RecipeDetailScreen from '../screens/RecipeDetailScreen';
 
 const DiscoverStack = createStackNavigator({
   Discover: RecipeDiscoverScreen,
+  RecipeDetail: RecipeDetailScreen,
 })
 
 DiscoverStack.navigationOptions = {
@@ -18,43 +19,21 @@ DiscoverStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name='find'
     />
   ),
 }
-
-// const HomeStack = createStackNavigator({
-//   Home: HomeScreen,
-// });
-
-// HomeStack.navigationOptions = {
-//   tabBarLabel: 'Home',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={
-//         Platform.OS === 'ios'
-//           ? `ios-information-circle${focused ? '' : '-outline'}`
-//           : 'md-information-circle'
-//       }
-//     />
-//   ),
-// };
 
 const LinksStack = createStackNavigator({
   Links: LinksScreen,
 });
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+  tabBarLabel: 'Learn',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+      name='rocket1'
     />
   ),
 };
@@ -65,11 +44,11 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: 'Me',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      name='user'
     />
   ),
 };
@@ -78,4 +57,10 @@ export default createBottomTabNavigator({
   DiscoverStack,
   LinksStack,
   SettingsStack,
+}, {
+  tabBarOptions: {
+    style: {
+      borderTopColor: "transparent"
+    }
+  }
 });
