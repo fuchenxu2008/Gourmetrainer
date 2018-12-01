@@ -1,9 +1,8 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
-import { ApolloProvider, Query } from 'react-apollo';
+import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
-import gql from 'graphql-tag';
 import { Provider } from 'react-redux';
 import configureStore from './redux/store';
 import AppNavigator from './navigation/AppNavigator';
@@ -11,7 +10,7 @@ import AppNavigator from './navigation/AppNavigator';
 const store = configureStore();
 
 const client = new ApolloClient({
-  uri: 'https://fakerql.com/graphql'
+  uri: 'http://127.0.0.1:3333/graphql'
 });
 
 export default class App extends React.Component {

@@ -8,10 +8,7 @@ const UserSchema = ({
         unique: true
     },
     gender: String,
-    avatar: {
-        type: String,
-        default: 'https://ws1.sinaimg.cn/large/006tNbRwgy1fxobhem2wuj30e80e874m.jpg'
-    }
+    avatar: String,
 });
 
 const User = mongoose.model("User", UserSchema);

@@ -6,6 +6,7 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const { port, mongoUrl } = require('./config');
 // GraphQL Schema
 const schema = require('./schema');
+const setRouter = require('./routes');
 
 /**
  * Help GraphQL interpret MongoDB ObjectID
@@ -24,9 +25,12 @@ mongoose.connect(mongoUrl, {
     console.log("√ [Database Connected]")
 });
 
+global.__root = __dirname;
+
 app.use(debugskr("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+setRouter(app);
 
 const server = new ApolloServer({ schema });
 
