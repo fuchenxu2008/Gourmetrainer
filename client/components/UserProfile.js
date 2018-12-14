@@ -13,10 +13,6 @@ export default class UserProfile extends Component {
         scrollY: new Animated.Value(0),
     }
 
-    componentDidMount() {
-        console.log('yes');
-    }
-
     render() {
         const headerHeight = this.state.scrollY.interpolate({
             inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],

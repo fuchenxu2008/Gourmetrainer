@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  TouchableHighlight,
   StyleSheet,
   TextInput,
   KeyboardAvoidingView
@@ -11,6 +10,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Button from '../components/Button';
+// import { MonoText } from '../components/StyledText';
 
 export default class AuthForm extends Component {
   state = {
@@ -26,6 +26,17 @@ export default class AuthForm extends Component {
   }
 
   _handleFormSubmit = () => {
+    const { type } = this.props;
+    const { email, nickname, password, repassword, gender } = this.state;
+    if (type === 'Register') {
+      if (!gender || !email || !nickname || !password || !repassword) {
+        console.log('error');
+      }
+    } else if (type === 'Login') {
+      if (!email || !password) {
+        console.log('error');
+      }
+    }
     console.log(this.state);
   }
 
@@ -34,79 +45,82 @@ export default class AuthForm extends Component {
     const { email, nickname, password, repassword, gender } = this.state;
     return (
       <KeyboardAvoidingView style={styles.container} enabled behavior="padding">
-      <View>
-        <Text style={styles.heading}>User {type}</Text>
-        <TextInput 
-          style={styles.textbox}
-          keyboardAppearance='dark'
-          keyboardType='email-address'
-          autoFocus={true}
-          autoCorrect={false}
-          returnKeyType='next'
-          placeholder='Email' 
-          placeholderTextColor='rgba(200,200,200,0.5)'
-          onChangeText={(text) => this._handleInputChange(text, 'email')}
-          value={email}
-        />
-        {
-          type === 'Register' &&
-          <View style={{ width: '100%' }}>
-            <TextInput
-              style={styles.textbox}
-              keyboardAppearance = 'dark'
-              autoCorrect={false}
-              returnKeyType='next'
-              placeholder='Nickname'
-              placeholderTextColor='rgba(200,200,200,0.5)'
-              onChangeText={(text) => this._handleInputChange(text, 'nickname')}
-              value={nickname}
-            />
-            <RNPickerSelect
-                items={[
-                  { label: 'Female', value: 'Female' },
-                  { label: 'Male', value: 'Male' },
-                ]}
-                placeholder = {{
-                  label: 'Select a gender...',
-                  value: null,
-                  color: '#9EA0A4',
-                }}
-                onValueChange={(text) => this._handleInputChange(text, 'gender')}
-            >
-              <View style={styles.selectorContainer}>
-                {
-                  gender
-                  ? <Text style={styles.selectorText}>{gender}</Text>
-                  : <Text style={styles.selectorPlaceholder}>Gender</Text>
-                }
-              </View>
-            </RNPickerSelect>
-          </View>
-        }
-        <TextInput
-          style={styles.textbox}
-          keyboardAppearance = 'dark'
-          placeholder='Password'
-          secureTextEntry={true}
-          autoCorrect={false}
-          placeholderTextColor='rgba(200,200,200,0.5)'
-          onChangeText={(text) => this._handleInputChange(text, 'password')}
-          value={password}
-        />
-        {
-          type === 'Register' &&
-          <TextInput
+         <View> 
+          <Text style={styles.heading}>User {type}</Text>
+          <TextInput 
             style={styles.textbox}
             keyboardAppearance='dark'
-            placeholder='Confirm Password'
+            keyboardType='email-address'
+            autoFocus={true}
+            autoCorrect={false}
+            returnKeyType='next'
+            onSubmitEditing={() => { this.passwordInput.focus(); }}
+            placeholder='Email' 
+            placeholderTextColor='rgba(200,200,200,0.5)'
+            onChangeText={(text) => this._handleInputChange(text, 'email')}
+            value={email}
+          />
+          {
+            // type === 'Register' &&
+            // <View style={{ width: '100%' }}>
+            //   <TextInput
+            //     style={styles.textbox}
+            //     keyboardAppearance = 'dark'
+            //     autoCorrect={false}
+            //     returnKeyType='next'
+            //     placeholder='Nickname'
+            //     placeholderTextColor='rgba(200,200,200,0.5)'
+            //     onChangeText={(text) => this._handleInputChange(text, 'nickname')}
+            //     value={nickname}
+            //   />
+            //   <RNPickerSelect
+            //       items={[
+            //         { label: 'Female', value: 'Female' },
+            //         { label: 'Male', value: 'Male' },
+            //       ]}
+            //       placeholder = {{
+            //         label: 'Select a gender...',
+            //         value: null,
+            //         color: '#9EA0A4',
+            //       }}
+            //       onValueChange={(text) => this._handleInputChange(text, 'gender')}
+            //   >
+            //     <View style={styles.selectorContainer}>
+            //       {
+            //         gender
+            //         ? <Text style={styles.selectorText}>{gender}</Text>
+            //         : <Text style={styles.selectorPlaceholder}>Gender</Text>
+            //       }
+            //     </View>
+            //   </RNPickerSelect>
+            // </View>
+          }
+          <TextInput
+            style={styles.textbox}
+            keyboardAppearance = 'dark'
+            placeholder='Password'
+            ref={(input) => { this.passwordInput = input; }}
             secureTextEntry={true}
             autoCorrect={false}
             placeholderTextColor='rgba(200,200,200,0.5)'
-            onChangeText={(text) => this._handleInputChange(text, 'repassword')}
-            value={repassword}
+            onChangeText={(text) => this._handleInputChange(text, 'password')}
+            value={password}
           />
-        }
-        <Button theme='hollow' onPress={this._handleFormSubmit}>{type}</Button>
+          {
+            type === 'Register' &&
+            <TextInput
+              style={styles.textbox}
+              keyboardAppearance='dark'
+              placeholder='Confirm Password'
+              ref={(input) => { this.confirmPaswordInput = input; }}
+              secureTextEntry={true}
+              autoCorrect={false}
+              placeholderTextColor='rgba(200,200,200,0.5)'
+              onChangeText={(text) => this._handleInputChange(text, 'repassword')}
+              value={repassword}
+            />
+          }
+          <Button theme='hollow' onPress={this._handleFormSubmit}>{type}</Button>
         </View>
       </KeyboardAvoidingView>
     )
@@ -116,10 +130,7 @@ export default class AuthForm extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'center',
         justifyContent: 'center',
-        // alignSelf: 'flex-start',
-        // marginTop: 20,
         width: '100%',
     },
     heading: {
@@ -127,6 +138,7 @@ const styles = StyleSheet.create({
         fontSize: 35,
         fontWeight: 'bold',
         marginBottom: 30,
+        alignSelf: 'center',
     },
     textbox: {
         width: '100%',

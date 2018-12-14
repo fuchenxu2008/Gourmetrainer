@@ -16,7 +16,7 @@ export default class SettingsScreen extends React.Component {
   load = (payload) => {
     try {
       const { type } = payload.action;
-      // if (!type.includes('BACK')) this.props.navigation.navigate('Welcome')
+      if (!type.includes('BACK')) this.props.navigation.navigate('Welcome')
     } catch (err) {}
   }
 

@@ -10,7 +10,7 @@ import AppNavigator from './navigation/AppNavigator';
 const store = configureStore();
 
 const client = new ApolloClient({
-  uri: 'http://10.8.157.231:3333/graphql'
+  uri: 'http://172.20.10.2:3333/graphql'
 });
 
 export default class App extends React.Component {
@@ -29,14 +29,12 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <Provider store={store}>
-          <ApolloProvider client={client}>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <AppNavigator />
-            </View>
-          </ApolloProvider>
-        </Provider>
+        <ApolloProvider client={client}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </ApolloProvider>
       );
     }
   }

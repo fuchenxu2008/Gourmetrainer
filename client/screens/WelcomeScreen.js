@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Entypo } from '@expo/vector-icons'
 import Button from '../components/Button';
 import AuthForm from '../containers/AuthForm';
 import foodbg from '../assets/images/foodbg.jpg';
@@ -11,6 +12,10 @@ export default class WelcomeScreen extends Component {
 
     state = {
         status: null,
+    }
+
+    _handleBack = () => {
+        this.setState({ status: null })
     }
 
     _handleRegister = () => {
@@ -43,7 +48,10 @@ export default class WelcomeScreen extends Component {
                 {
                     status &&
                     <View style={styles.authContainer}>
-                        <AuthForm type={status} />
+                        <TouchableOpacity onPress={this._handleBack} style={styles.backBtn}>
+                            <Entypo name='chevron-thin-left' size={25} color='white'/>
+                        </TouchableOpacity>
+                        <AuthForm type={status} handleBack={this._handleBack} />
                     </View>
                 }
             </View>
@@ -90,6 +98,12 @@ const styles = StyleSheet.create({
     welcomeSection: {
         width: '80%',
         alignSelf: 'center',
+    },
+    backBtn: {
+        position: 'absolute',
+        top: '8%',
+        left: 0,
+        zIndex: 10,
     },
     authContainer: {
         alignSelf: 'center',

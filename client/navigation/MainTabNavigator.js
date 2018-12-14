@@ -17,9 +17,9 @@ const DiscoverStack = createStackNavigator({
 
 DiscoverStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
-  // if (navigation.state.index > 0) {
-  //   tabBarVisible = false;
-  // }
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
   return ({
     tabBarLabel: 'Discover',
     tabBarIcon: ({ focused }) => (

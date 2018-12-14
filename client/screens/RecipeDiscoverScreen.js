@@ -14,7 +14,7 @@ export default class RecipeDiscoverScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.navigation.navigate('Settings')
+    // this.props.navigation.navigate('Settings')
   }
 
   _handleInputChange = (title) => {
