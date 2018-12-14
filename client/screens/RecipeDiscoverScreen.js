@@ -13,6 +13,10 @@ export default class RecipeDiscoverScreen extends Component {
     search_title: ''
   }
 
+  componentDidMount() {
+    this.props.navigation.navigate('Settings')
+  }
+
   _handleInputChange = (title) => {
     this.setState({ search_title: title })
   }

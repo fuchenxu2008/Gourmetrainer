@@ -10,7 +10,7 @@ import AppNavigator from './navigation/AppNavigator';
 const store = configureStore();
 
 const client = new ApolloClient({
-  uri: 'http://10.8.204.12:3333/graphql'
+  uri: 'http://10.8.157.231:3333/graphql'
 });
 
 export default class App extends React.Component {
@@ -44,7 +44,7 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require('./assets/images/robot-dev.png'),
+        require('./assets/images/foodbg.jpg'),
         require('./assets/images/robot-prod.png'),
       ]),
       Font.loadAsync({

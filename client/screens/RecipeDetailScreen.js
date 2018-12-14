@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, ScrollView, Image, StyleSheet } from 'react-native';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import Button from '../components/Button'
 
 const GET_RECIPE = gql`
   query getRecipe($_id: String!) {
@@ -43,6 +44,7 @@ export default class RecipeDetail extends Component {
                   ))}
                 </View>
                 <Text style={styles.heading}>Tags</Text>
+                <Button onPress={() => {}}>test</Button>
                 <Text>{tags}</Text>
                 <Text style={styles.heading}>Intro</Text>
                 <Text>{intro}</Text>

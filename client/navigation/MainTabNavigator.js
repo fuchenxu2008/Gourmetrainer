@@ -7,6 +7,7 @@ import RecipeDiscoverScreen from '../screens/RecipeDiscoverScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AuthScreen from '../screens/AuthScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
 import RecipeDetailScreen from '../screens/RecipeDetailScreen';
 
 const DiscoverStack = createStackNavigator({
@@ -14,14 +15,21 @@ const DiscoverStack = createStackNavigator({
   RecipeDetail: RecipeDetailScreen,
 })
 
-DiscoverStack.navigationOptions = {
-  tabBarLabel: 'Discover',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name='find'
-    />
-  ),
+DiscoverStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  // if (navigation.state.index > 0) {
+  //   tabBarVisible = false;
+  // }
+  return ({
+    tabBarLabel: 'Discover',
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name='find'
+      />
+    ),
+    tabBarVisible,
+  });
 }
 
 const LinksStack = createStackNavigator({
@@ -40,17 +48,26 @@ LinksStack.navigationOptions = {
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
-  Auth: AuthScreen
+  Auth: AuthScreen,
+  Welcome: WelcomeScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Me',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name='user'
-    />
-  ),
+SettingsStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return ({
+    tabBarLabel: 'Me',
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name='user'
+      />
+    ),
+    tabBarVisible,
+  });
 };
 
 export default createBottomTabNavigator({

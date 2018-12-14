@@ -1,75 +1,165 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
-import t from 'tcomb-form-native';
+import {
+  View,
+  Text,
+  TouchableHighlight,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView
+} from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-
-const Form = t.form.Form;
-
-const UserLogin = t.struct({
-    email: t.String, // a required string
-    password: t.String, // an optional string
-    rememberMe: t.Boolean // a boolean
-});
-
-const Gender = t.enums({
-    M: 'Male',
-    F: 'Female'
-});
-
-const UserRegister = t.struct({
-    email: t.String, // a required string
-    nickname: t.String,
-    gender: Gender,
-    password: t.String, // an optional string
-    rememberMe: t.Boolean // a boolean
-});
+import Button from '../components/Button';
 
 export default class AuthForm extends Component {
-    onPress = () => {
-        // call getValue() to get the values of the form
-        var value = this.refs.form.getValue();
-        if (value) { // if validation fails, value will be null
-            console.log(value); // value here is an instance of Person
-        }
-    }
+  state = {
+    email: '',
+    nickname: '',
+    password: '',
+    repassword: '',
+    gender: null,
+  }
 
-    render() {
-        return (
-        <View>
-            <Form
-            ref="form"
-            type={UserRegister}
-            //   options={options}
+  _handleInputChange = (text, field) => {
+    this.setState({ [field]: text })
+  }
+
+  _handleFormSubmit = () => {
+    console.log(this.state);
+  }
+
+  render() {
+    const { type } = this.props;
+    const { email, nickname, password, repassword, gender } = this.state;
+    return (
+      <KeyboardAvoidingView style={styles.container} enabled behavior="padding">
+      <View>
+        <Text style={styles.heading}>User {type}</Text>
+        <TextInput 
+          style={styles.textbox}
+          keyboardAppearance='dark'
+          keyboardType='email-address'
+          autoFocus={true}
+          autoCorrect={false}
+          returnKeyType='next'
+          placeholder='Email' 
+          placeholderTextColor='rgba(200,200,200,0.5)'
+          onChangeText={(text) => this._handleInputChange(text, 'email')}
+          value={email}
+        />
+        {
+          type === 'Register' &&
+          <View style={{ width: '100%' }}>
+            <TextInput
+              style={styles.textbox}
+              keyboardAppearance = 'dark'
+              autoCorrect={false}
+              returnKeyType='next'
+              placeholder='Nickname'
+              placeholderTextColor='rgba(200,200,200,0.5)'
+              onChangeText={(text) => this._handleInputChange(text, 'nickname')}
+              value={nickname}
             />
-            <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Save</Text>
-            </TouchableHighlight>
+            <RNPickerSelect
+                items={[
+                  { label: 'Female', value: 'Female' },
+                  { label: 'Male', value: 'Male' },
+                ]}
+                placeholder = {{
+                  label: 'Select a gender...',
+                  value: null,
+                  color: '#9EA0A4',
+                }}
+                onValueChange={(text) => this._handleInputChange(text, 'gender')}
+            >
+              <View style={styles.selectorContainer}>
+                {
+                  gender
+                  ? <Text style={styles.selectorText}>{gender}</Text>
+                  : <Text style={styles.selectorPlaceholder}>Gender</Text>
+                }
+              </View>
+            </RNPickerSelect>
+          </View>
+        }
+        <TextInput
+          style={styles.textbox}
+          keyboardAppearance = 'dark'
+          placeholder='Password'
+          secureTextEntry={true}
+          autoCorrect={false}
+          placeholderTextColor='rgba(200,200,200,0.5)'
+          onChangeText={(text) => this._handleInputChange(text, 'password')}
+          value={password}
+        />
+        {
+          type === 'Register' &&
+          <TextInput
+            style={styles.textbox}
+            keyboardAppearance='dark'
+            placeholder='Confirm Password'
+            secureTextEntry={true}
+            autoCorrect={false}
+            placeholderTextColor='rgba(200,200,200,0.5)'
+            onChangeText={(text) => this._handleInputChange(text, 'repassword')}
+            value={repassword}
+          />
+        }
+        <Button theme='hollow' onPress={this._handleFormSubmit}>{type}</Button>
         </View>
-        )
-    }
+      </KeyboardAvoidingView>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        // alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 50,
-        padding: 20,
-        backgroundColor: '#ffffff',
+        // alignSelf: 'flex-start',
+        // marginTop: 20,
+        width: '100%',
     },
-    buttonText: {
-        fontSize: 18,
+    heading: {
         color: 'white',
-        alignSelf: 'center'
+        fontSize: 35,
+        fontWeight: 'bold',
+        marginBottom: 30,
     },
-    button: {
-        height: 36,
-        backgroundColor: '#48BBEC',
-        borderColor: '#48BBEC',
+    textbox: {
+        width: '100%',
+        paddingLeft: 25,
+        paddingRight: 25,
+        paddingTop: 13,
+        paddingBottom: 13,
+        borderRadius: 30,
         borderWidth: 1,
-        borderRadius: 8,
-        marginBottom: 10,
-        alignSelf: 'stretch',
-        justifyContent: 'center'
+        borderColor: 'white',
+        fontSize: 19,
+        fontWeight: 'bold',
+        color: 'white',
+        marginBottom: 20,
+    },
+    selectorContainer: {
+      paddingLeft: 25,
+      paddingRight: 25,
+      paddingTop: 13,
+      paddingBottom: 13,
+      borderRadius: 30,
+      borderWidth: 1,
+      borderColor: 'white',
+      marginBottom: 20,
+    },
+    selectorPlaceholder: {
+      fontSize: 19,
+      fontWeight: 'bold',
+      color: 'rgba(200,200,200,0.5)',
+    },
+    selectorText: {
+      fontSize: 19,
+      fontWeight: 'bold',
+      color: 'white',
     }
-});
+})
