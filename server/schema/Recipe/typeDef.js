@@ -10,6 +10,7 @@ module.exports = `
         tags: String!
         intro: String
         ingredients: String!
+        level: Int
         burden: String
         albums: [String]
         steps: [Step!]!

@@ -14,6 +14,7 @@ const RecipeSchema = mongoose.Schema({
         step: String,
         _id: false
     }],
+    level: Number
 });
 
 RecipeSchema.plugin(random)
