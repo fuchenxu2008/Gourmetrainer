@@ -1,8 +1,8 @@
 module.exports = `
     input UserInput {
         nickname: String
-        email: String
-        password: String
+        email: String!
+        password: String!
         gender: String
         avatar: String
     }
@@ -13,6 +13,7 @@ module.exports = `
         email: String!
         password: String!
         gender: String!
+        token: String
         avatar: String
         cookedHistories: [CookedHistory]!
     }
