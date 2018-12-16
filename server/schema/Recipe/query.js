@@ -7,7 +7,6 @@ const resolvers = {
             title: new RegExp(title, 'i'),
             tags: new RegExp(tags, 'i'),
         }).limit(limit),
-        
         getRandomRecipes: async (_, { limit }) => { 
             const getRandom = () => new Promise((resolve, reject) => {           
                 RecipeModel.findRandom({}, {}, { limit }, (err, result) => {
@@ -15,7 +14,8 @@ const resolvers = {
                 });                                                                                            
             });
             return await getRandom();
-        }
+        },
+        
     }
 }
 

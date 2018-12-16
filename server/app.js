@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { ApolloServer, gql } = require('apollo-server-express');
 const { port, mongoUrl } = require('./config');
 const {fetchUser} = require('./controllers/fetchUserWithToken')
+const {getReceipeLength,getMinMax,aggregateRecipe} = require("./controllers/addRecipeLevel")
 
 // GraphQL Schema
 
@@ -38,7 +39,7 @@ setRouter(app);
 const server = new ApolloServer({ schema, context:({ req }) => {
         // get the user token from the headers
         const token = req.headers.authorization || '';
-        // const token= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjMTUzMDUzNGJjNWYxMmJmYzNhNzAxNSIsImVtYWlsIjoiMzIxNDE1QDEyMzQuY29tIiwiaWF0IjoxNTQ0ODkyNDk5LCJleHAiOjE1NDQ5Nzg4OTl9.MoMyW9YMTFZK0CXFdfqu3jLGb2hvoEzov_7_y_PEm_w"
+
         // try to retrieve a user with the token
         const user = fetchUser(token);
 
@@ -56,3 +57,5 @@ server.applyMiddleware({ app });
 app.listen(port, () => {
     console.log(`√ Server started at http://localhost:${port}`);
 });
+
+aggregateRecipe()
