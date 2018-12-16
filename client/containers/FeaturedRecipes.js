@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import RecipeCard from "../components/RecipeCard";
+import FeaturedCard from "../components/FeaturedCard";
 
 const GET_FEATURED = gql`
     query SearchRecipes($limit: Int) {
@@ -15,22 +15,37 @@ const GET_FEATURED = gql`
     }
 `;
 
+const { width, height } = Dimensions.get('window');
+
 export default class FeaturedRecipes extends Component {
   render() {
     const { limit } = this.props;
     return (
-        <View style={{ paddingBottom: 30 }}>
+        <View>
             <Query query={GET_FEATURED} variables={{ limit }}>
                 {({ loading, error, data }) => {
-                    if (loading) return <Text>No results</Text>;
-                    if (error) return <Text>{`Error!: ${error}`}</Text>;
+                    if (loading) return <Text style={styles.scrollContainer}>No results</Text>;
+                    if (error) return <Text style={styles.scrollContainer}>{`Error!: ${error}`}</Text>;
 
-                    return data.getRecipes.map(recipe => (
-                        <RecipeCard recipe={recipe} key={recipe._id} />
-                    ))
+                    return (
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
+                            {
+                                data.getRecipes.map(recipe => (
+                                    <FeaturedCard recipe={recipe} key={recipe._id} />
+                                ))
+                            }
+                        </ScrollView>
+                    );
                 }}
             </Query>
         </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+    scrollContainer: {
+        paddingLeft: 0.06 * width,
+        paddingRight: 0.02 * width,
+    }
+})

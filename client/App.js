@@ -10,7 +10,7 @@ import AppNavigator from './navigation/AppNavigator';
 const store = configureStore();
 
 const client = new ApolloClient({
-  uri: 'http://172.20.10.2:3333/graphql'
+  uri: 'http://kyrie.top:3333/graphql'
 });
 
 export default class App extends React.Component {
@@ -43,7 +43,7 @@ export default class App extends React.Component {
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/foodbg.jpg'),
-        require('./assets/images/robot-prod.png'),
+        require('./assets/images/default_male.png'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar

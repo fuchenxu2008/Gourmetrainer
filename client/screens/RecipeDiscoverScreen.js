@@ -32,10 +32,10 @@ export default class RecipeDiscoverScreen extends Component {
             placeholder='What you wanna cook?'
             keywords={this.state.search_title}
           />
+          <RecipeSearchResult title={search_title} limit={5} />
         </View>
-        <RecipeSearchResult title={search_title} limit={5} />
         <Text style={styles.heading}>Featured</Text>
-        <FeaturedRecipes limit={5} />
+        <FeaturedRecipes limit={15} />
       </ScrollView>
     )
   }
@@ -45,18 +45,18 @@ const styles = StyleSheet.create({
   scrollContainer: {
     paddingTop: 40,
     backgroundColor: 'rgb(250, 250, 250)',
-    paddingLeft: '6%',
-    paddingRight: '6%',
   },
   headerSection: {
-    // backgroundColor: 'blue',
-    // position: 'fixed'
+    paddingLeft: '6%',
+    paddingRight: '6%',
   },
   heading: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'color: rgb(70, 70, 70)',
     marginBottom: 10,
+    paddingLeft: '6%',
+    paddingRight: '6%',
     // fontFamily: 'Iowan Old Style'
   }
 });

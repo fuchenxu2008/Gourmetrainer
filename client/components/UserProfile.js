@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, ScrollView, Image, Animated } from 'react-native';
 import { LinearGradient } from 'expo';
-import avatar from '../assets/images/avatar.png';
+import avatar from '../assets/images/default_male.png';
 
 const HEADER_MAX_HEIGHT = 140;
 const HEADER_MIN_HEIGHT = 90;
