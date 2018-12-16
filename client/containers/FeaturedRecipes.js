@@ -1,21 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import FeaturedCard from "../components/FeaturedCard";
+import layout from '../constants/Layout';
+import { GET_FEATURED } from '../constants/GraphAPI';
 
-const GET_FEATURED = gql`
-    query SearchRecipes($limit: Int) {
-        getRecipes(limit: $limit) {
-            _id
-            title
-            albums
-            tags
-        }
-    }
-`;
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = layout.window;
 
 export default class FeaturedRecipes extends Component {
   render() {
@@ -30,7 +21,7 @@ export default class FeaturedRecipes extends Component {
                     return (
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
                             {
-                                data.getRecipes.map(recipe => (
+                                data.getRandomRecipes.map(recipe => (
                                     <FeaturedCard recipe={recipe} key={recipe._id} />
                                 ))
                             }

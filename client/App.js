@@ -3,14 +3,19 @@ import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
-import { Provider } from 'react-redux';
-import configureStore from './redux/store';
+import DropdownAlert from 'react-native-dropdownalert';
+import { DropDownHolder } from './util/alert';
+import typeDefs from './clientState/typeDef';
+import { defaults, resolvers } from './clientState/resolvers';
 import AppNavigator from './navigation/AppNavigator';
 
-const store = configureStore();
-
 const client = new ApolloClient({
-  uri: 'http://kyrie.top:3333/graphql'
+  uri: 'http://10.8.204.12:3333/graphql',
+  clientState: {
+    defaults,
+    resolvers,
+    typeDefs,
+  }
 });
 
 export default class App extends React.Component {
@@ -33,6 +38,7 @@ export default class App extends React.Component {
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <AppNavigator />
+            <DropdownAlert ref={ref => DropDownHolder.setDropDown(ref)} closeInterval={3000}/>
           </View>
         </ApolloProvider>
       );
@@ -42,15 +48,17 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
+        require('./assets/images/cookday.jpg'),
         require('./assets/images/foodbg.jpg'),
         require('./assets/images/default_male.png'),
+        require('./assets/images/default_female.png'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        // 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
     ]);
   };

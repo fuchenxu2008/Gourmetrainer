@@ -8,12 +8,15 @@ class RecipeCard extends Component {
     }
 
     render() {
-        const { _id, albums, title } = this.props.recipe;
+        const { _id, albums, title, level } = this.props.recipe;
         
         return (
             <TouchableOpacity elevation={13} style={styles.recipeCard} onPress={() => this._handleClickRecipe(_id)}>
                 <Image source={{ uri: albums[0] }} style={styles.recipeImg} />
-                <Text style={styles.recipeTitle}>{title}</Text>
+                <View>
+                    <Text style={styles.recipeTitle}>{title}</Text>
+                    <Text style={styles.recipeTitle}>{level}</Text>
+                </View>
             </TouchableOpacity>
         )
     }
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'rgb(70, 70, 70)'
+        color: 'rgb(100, 100, 100)'
     }
 })
 

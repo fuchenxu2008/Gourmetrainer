@@ -15,7 +15,9 @@ export default class WelcomeScreen extends Component {
     }
 
     _handleBack = () => {
-        this.setState({ status: null })
+        this.state.status
+            ? this.setState({ status: null })
+            : this.props.navigation.goBack();
     }
 
     _handleRegister = () => {
@@ -24,6 +26,10 @@ export default class WelcomeScreen extends Component {
 
     _handleLogin = () => {
         this.setState({ status: 'Login' })
+    }
+    
+    _handleLoggedIn = () => {
+        this.props.navigation.popToTop();
     }
 
     render() {
@@ -36,6 +42,10 @@ export default class WelcomeScreen extends Component {
                     <Image source={foodbg} style={styles.backgroundImg} blurRadius={10} />
                     <View style={styles.bgMask} />
                 </View>
+
+                <TouchableOpacity onPress={this._handleBack} style={styles.backBtn}>
+                    <Entypo name='chevron-thin-left' size={25} color='white'/>
+                </TouchableOpacity>
                 
                 {!status &&
                     <View style={styles.welcomeSection}>
@@ -48,10 +58,7 @@ export default class WelcomeScreen extends Component {
                 {
                     status &&
                     <View style={styles.authContainer}>
-                        <TouchableOpacity onPress={this._handleBack} style={styles.backBtn}>
-                            <Entypo name='chevron-thin-left' size={25} color='white'/>
-                        </TouchableOpacity>
-                        <AuthForm type={status} handleBack={this._handleBack} />
+                        <AuthForm type={status} handleBack={this._handleBack} onLoggedIn={this._handleLoggedIn} />
                     </View>
                 }
             </View>
@@ -102,7 +109,7 @@ const styles = StyleSheet.create({
     backBtn: {
         position: 'absolute',
         top: '8%',
-        left: 0,
+        left: '7.5%',
         zIndex: 10,
     },
     authContainer: {

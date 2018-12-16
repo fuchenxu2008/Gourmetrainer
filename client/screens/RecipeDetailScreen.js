@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, StyleSheet, Dimensions, Animated } from 'react-native';
+import { Text, View, ScrollView, Image, StyleSheet, Animated } from 'react-native';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Button from '../components/Button'
+import Button from '../components/Button';
+import layout from '../constants/Layout';
 
 const GET_RECIPE = gql`
   query getRecipe($_id: String!) {
@@ -21,7 +22,7 @@ const GET_RECIPE = gql`
   }
 `;
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = layout.window;
 
 export default class RecipeDetail extends Component {
   static navigationOptions = {
@@ -66,18 +67,27 @@ export default class RecipeDetail extends Component {
                   <View style={{ height: 0.28 * height }} />
                   <View style={styles.recipeCard}>
                   <Text style={styles.title}>{title}</Text>
-                  <Text>{tags}</Text>
-
+                  <View style={styles.tagsContainer}>
+                    <Text style={styles.tags}>{tags}</Text>
+                  </View>
                   <Text style={styles.heading}>Introduction</Text>
-                  <Text>{intro}</Text>
+                  <Text style={styles.contentText}>{intro}</Text>
                   <Text style={styles.heading}>Ingredients</Text>
-                  <Text>{ingredients}{burden}</Text>
+
+                  {
+                    (`${ingredients};${burden}`).split(';').map((item, k) => (
+                      <View key={`ingredient-${k}`} style={styles.ingredientContainer}>
+                        <Text style={styles.contentText}>{ item.split(',')[0] }</Text>
+                        <Text style={styles.contentText}>{ item.split(',')[1] }</Text>
+                      </View>
+                    ))
+                  }
 
                   <Text style={styles.heading}>Steps</Text>
                     {
                       steps.map((step, i) => (
                         <View key={i} style={styles.stepContainer}>
-                          <Text style={styles.stepText}>{step.step}</Text>
+                          <Text style={{ ...styles.contentText, ...styles.stepText}}>{step.step}</Text>
                           <Image source={{ uri: step.img }} style={styles.stepImg} />
                         </View>
                       ))
@@ -111,11 +121,35 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15,
   },
+  tagsContainer: {
+    backgroundColor: 'rgb(243, 223, 69)',
+    alignSelf: 'flex-start',
+    borderRadius: 13,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+  },
+  tags: {
+    color: 'white',
+  },
   heading: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 23,
     marginTop: 25,
     marginBottom: 10,
+    color: 'rgb(243, 223, 69)',
+  },
+  contentText: {
+    color: 'rgb(100, 100, 100)',
+    fontSize: 15,
+    lineHeight: 22,
+  },
+  ingredientContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginBottom: 10,
+    paddingLeft: '6%',
+    paddingRight: '6%',
   },
   recipeImgContainer: {
     position: 'absolute',

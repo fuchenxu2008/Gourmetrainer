@@ -4,15 +4,16 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import RecipeDiscoverScreen from '../screens/RecipeDiscoverScreen';
-import LinksScreen from '../screens/LinksScreen';
+import LearnScreen from '../screens/LearnScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import AuthScreen from '../screens/AuthScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import RecipeDetailScreen from '../screens/RecipeDetailScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const DiscoverStack = createStackNavigator({
   Discover: RecipeDiscoverScreen,
   RecipeDetail: RecipeDetailScreen,
+  Search: SearchScreen,
 })
 
 DiscoverStack.navigationOptions = ({ navigation }) => {
@@ -32,11 +33,11 @@ DiscoverStack.navigationOptions = ({ navigation }) => {
   });
 }
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const LearnStack = createStackNavigator({
+  Learn: LearnScreen,
 });
 
-LinksStack.navigationOptions = {
+LearnStack.navigationOptions = {
   tabBarLabel: 'Learn',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -48,7 +49,6 @@ LinksStack.navigationOptions = {
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
-  Auth: AuthScreen,
   Welcome: WelcomeScreen,
 });
 
@@ -72,7 +72,7 @@ SettingsStack.navigationOptions = ({ navigation }) => {
 
 export default createBottomTabNavigator({
   DiscoverStack,
-  LinksStack,
+  LearnStack,
   SettingsStack,
 }, {
   tabBarOptions: {

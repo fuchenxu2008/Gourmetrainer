@@ -14,6 +14,10 @@ export default class UserProfile extends Component {
     }
 
     render() {
+        const { user } = this.props;
+        if (!user) return null;
+        const { email, _id, gender, nickname } = user;
+
         const headerHeight = this.state.scrollY.interpolate({
             inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
             outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
@@ -71,7 +75,7 @@ export default class UserProfile extends Component {
                         ...styles.headerTextContainer,
                         bottom: headerTitleBottom,
                     }}>
-                        <Text style={styles.headerText}>Chenxu Fu</Text>
+                        <Text style={styles.headerText}>{nickname}</Text>
                     </Animated.View>
                 </Animated.View>
                 <ScrollView
@@ -90,7 +94,7 @@ export default class UserProfile extends Component {
                     }}>
                         <Image source={avatar} style={styles.profileAvatar} />
                     </Animated.View>
-                    <View><Text style={styles.profileNickname}>Chenxu Fu</Text></View>        
+                    <View><Text style={styles.profileNickname}>{nickname}</Text></View>        
                 </ScrollView>
             </View>
         );

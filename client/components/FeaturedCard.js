@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import layout from '../constants/Layout';
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = layout.window;
 
 export class FeaturedCard extends Component {
   _handleClickRecipe = (_id) => {
@@ -37,6 +38,6 @@ const styles = StyleSheet.create({
     // marginLeft: 20,
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'rgb(70, 70, 70)'
+    color: 'rgb(100, 100, 100)'
   }
 });

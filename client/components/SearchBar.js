@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
 import { Icon } from 'expo';
 
-const SearchBar = ({ onInputChange, placeholder, keywords }) => (
+const SearchBar = ({ onInputChange, placeholder, keywords, onFocus }) => (
     <View style={styles.searchSection}>
         <Icon.Ionicons name='ios-search' size={24} style={styles.searchIcon} />
         <TextInput
@@ -10,6 +10,7 @@ const SearchBar = ({ onInputChange, placeholder, keywords }) => (
             placeholder={placeholder}
             value={keywords}
             style={styles.searchInput}
+            onFocus={onFocus}
         />
     </View>
 )
@@ -22,11 +23,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        // width: '90%',
-        // alignSelf: 'center',
         backgroundColor: 'white',
-        marginTop: 20,
-        marginBottom: 20,
+        marginVertical: 20,
+        // marginHorizontal: '6%',
         borderRadius: 10,
         shadowOffset:{  width: 2,  height: 7,  },
         shadowColor: 'rgb(200, 200, 200)',

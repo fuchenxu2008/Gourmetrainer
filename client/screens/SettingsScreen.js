@@ -1,8 +1,11 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, Animated } from 'react-native';
+import { Speech } from 'expo';
 import UserProfile from '../components/UserProfile';
+import { graphql } from 'react-apollo';
+import { GET_CURRENT_USER } from '../constants/GraphAPI';
 
-export default class SettingsScreen extends React.Component {
+export class SettingsScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -14,9 +17,11 @@ export default class SettingsScreen extends React.Component {
 
   // Called everytime the page is displayed
   load = (payload) => {
+    // Speech.speak('Fuck you ORA ORA ORA ORA ORA');
     try {
       const { type } = payload.action;
-      if (!type.includes('BACK')) this.props.navigation.navigate('Welcome')
+      const { data } = this.props;
+      if (!data.currentUser && !type.includes('BACK')) this.props.navigation.navigate('Welcome')
     } catch (err) {}
   }
 
@@ -26,8 +31,13 @@ export default class SettingsScreen extends React.Component {
   }
 
   render() {
+    const { data } = this.props;
     return (
-        <UserProfile />
+        <View style={{ flex: 1 }}>
+          <UserProfile user={data.currentUser} />
+        </View>
     );
   }
 }
+
+export default graphql(GET_CURRENT_USER)(SettingsScreen);
