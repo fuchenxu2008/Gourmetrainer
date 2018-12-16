@@ -1,5 +1,4 @@
-const User = require("../models/")
-
+// const User = require("../models")
 //Create
 module.exports = {
     addUser: (req, res) => {

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const random = require('mongoose-simple-random');
 
 const RecipeSchema = mongoose.Schema({
     _id: String,
@@ -14,6 +15,8 @@ const RecipeSchema = mongoose.Schema({
         _id: false
     }],
 });
+
+RecipeSchema.plugin(random)
 
 const Recipe = mongoose.model("Recipe", RecipeSchema);
 

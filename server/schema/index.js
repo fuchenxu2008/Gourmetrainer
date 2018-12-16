@@ -16,12 +16,14 @@ const Root = /* GraphQL */`
         getCookedHistory(_id: String!): CookedHistory
         getCookedHistories(user: String, recipe: String): [CookedHistory]
         uploads: [File]
+        loginUser(email:String!, password: String!): User
+        getRandomRecipes(limit:Int): [Recipe]  
     }
 
     type Mutation {
         addCookedHistory(user: String!, recipe: String!, rating: Float): CookedHistory!
         removeCookedHistory(_id: String!): CookedHistory
-        createUser(params: UserInput!): User!
+        createUser(params: UserInput!): User
         updateUser(_id: String!, params: UserInput!): User!
         deleteUser(_id: String!): User
         singleUpload(file: Upload!): File!
