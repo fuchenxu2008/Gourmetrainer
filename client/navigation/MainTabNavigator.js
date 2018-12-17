@@ -9,11 +9,16 @@ import SettingsScreen from '../screens/SettingsScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import RecipeDetailScreen from '../screens/RecipeDetailScreen';
 import SearchScreen from '../screens/SearchScreen';
+import TagCenter from '../screens/TagCenter';
+import IngredientsScreen from '../screens/IngredientsScreen';
+import LearnStepScreen from '../screens/LearnStepScreen';
 
 const DiscoverStack = createStackNavigator({
   Discover: RecipeDiscoverScreen,
   RecipeDetail: RecipeDetailScreen,
   Search: SearchScreen,
+  Ingredients: IngredientsScreen,
+  LearnStep: LearnStepScreen,
 })
 
 DiscoverStack.navigationOptions = ({ navigation }) => {
@@ -35,6 +40,9 @@ DiscoverStack.navigationOptions = ({ navigation }) => {
 
 const LearnStack = createStackNavigator({
   Learn: LearnScreen,
+  TagCenter: TagCenter,
+  Ingredients: IngredientsScreen,
+  LearnStep: LearnStepScreen,
 });
 
 LearnStack.navigationOptions = {

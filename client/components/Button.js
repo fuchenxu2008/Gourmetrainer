@@ -13,7 +13,7 @@ export default class Button extends Component {
         const themeStyle = {
             color: theme === 'hollow' ? 'rgba(0, 0, 0, 0.5)' : (style.color || 'white'),
             backgroundColor: theme === 'hollow' ? (style.color || 'white') : 'transparent',
-    }
+        }
 
     return ( 
         <TouchableOpacity onPress={onPress} style={{

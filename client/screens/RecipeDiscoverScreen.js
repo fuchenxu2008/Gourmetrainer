@@ -4,6 +4,8 @@ import SearchBar from '../components/SearchBar';
 import RecipeSearchResult from '../containers/RecipeSearchResult';
 import FeaturedRecipes from '../containers/FeaturedRecipes';
 import Banner from '../components/Banner.js';
+import layout from '../constants/Layout';
+const { height } = layout.window;
 
 export default class RecipeDiscoverScreen extends Component {
   static navigationOptions = {
@@ -20,7 +22,7 @@ export default class RecipeDiscoverScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView style={styles.scrollContainer} contentContainerStyle={{ paddingBottom: 0.05 * height }}>
         <View style={styles.headerSection} onPress={this._handleBeginSearch}>
           <SearchBar
             placeholder='What you wanna cook?'

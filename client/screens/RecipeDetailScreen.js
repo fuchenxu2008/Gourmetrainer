@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, StyleSheet, Animated } from 'react-native';
+import { Text, View, ScrollView, Image, StyleSheet, Animated, TouchableHighlight } from 'react-native';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Button from '../components/Button';
+import { AntDesign } from '@expo/vector-icons'
+import { LinearGradient } from 'expo';
 import layout from '../constants/Layout';
 
 const GET_RECIPE = gql`
@@ -31,6 +32,10 @@ export default class RecipeDetail extends Component {
 
   state = {
     scrollY: new Animated.Value(0),
+  }
+
+  _handleEnterLearningMode = (recipe) => {
+    this.props.navigation.navigate('Ingredients', { recipe })
   }
 
   render() {
@@ -94,6 +99,21 @@ export default class RecipeDetail extends Component {
                     }
                   </View>
                 </ScrollView>
+                <TouchableHighlight onPress={() => this._handleEnterLearningMode(data.getRecipe)}>
+                  <LinearGradient
+                    colors={['#89f7fe', '#66a6ff']}
+                    start={[0, 0]}
+                    end={[1, 1]}
+                    location={[0.25, 0.4]}
+                    style={styles.playIconContainer}
+                  >
+                    <AntDesign
+                        name='caretright'
+                        size={40}
+                        style={styles.playIcon}
+                    />
+                  </LinearGradient>
+                </TouchableHighlight>
               </View>
             )
           }}
@@ -175,5 +195,24 @@ const styles = StyleSheet.create({
     width: '100%',
     height: width * 0.88 * 0.6,
     borderRadius: 10,
+  },
+  playIconContainer: {
+    position: 'absolute',
+    bottom: 0.05 * width,
+    right: 0.05 * width,
+    paddingVertical: 15,
+    paddingHorizontal: 16,
+    borderRadius: width,
+    // backgroundColor: 'rgb(245, 222, 25)',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowColor: '#66a6ff',
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+  },
+  playIcon: {
+    color: 'white',
   }
 })

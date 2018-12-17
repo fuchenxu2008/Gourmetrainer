@@ -26,6 +26,7 @@ export default class SearchScreen extends Component {
                         onInputChange={this._handleInputChange}
                         placeholder='What you wanna cook?'
                         keywords={this.state.search_title}
+                        autoFocus={true}
                     />
                 </View>
                 <RecipeSearchResult title={search_title} limit={15} />

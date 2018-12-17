@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
 import { Icon } from 'expo';
 
-const SearchBar = ({ onInputChange, placeholder, keywords, onFocus }) => (
-    <View style={styles.searchSection}>
-        <Icon.Ionicons name='ios-search' size={24} style={styles.searchIcon} />
-        <TextInput
-            onChangeText={onInputChange}
-            placeholder={placeholder}
-            value={keywords}
-            style={styles.searchInput}
-            onFocus={onFocus}
-        />
-    </View>
-)
-
-export default SearchBar;
+export default class SearchBar extends Component {
+    render() {
+        const { onInputChange, placeholder, keywords, onFocus, autoFocus } = this.props;
+        return (
+            <View style={styles.searchSection}>
+                <Icon.Ionicons name='ios-search' size={24} style={styles.searchIcon} />
+                <TextInput
+                    onChangeText={onInputChange}
+                    placeholder={placeholder}
+                    value={keywords}
+                    style={styles.searchInput}
+                    onFocus={onFocus}
+                    autoFocus={autoFocus}
+                />
+            </View>
+        )
+    }
+}
 
 const styles = StyleSheet.create({
     searchSection: {
