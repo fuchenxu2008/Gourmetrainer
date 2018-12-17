@@ -52,6 +52,29 @@ export default class App extends React.Component {
         require('./assets/images/foodbg.jpg'),
         require('./assets/images/default_male.png'),
         require('./assets/images/default_female.png'),
+        /**
+         * Cuisines
+         */
+        require('./assets/cuisines/chuancai.jpg'),
+        require('./assets/cuisines/lucai.jpeg'),
+        require('./assets/cuisines/yuecai.jpg'),
+        require('./assets/cuisines/sucai.jpg'),
+        require('./assets/cuisines/zhecai.jpg'),
+        require('./assets/cuisines/mincai.jpg'),
+        require('./assets/cuisines/xiangcai.jpg'),
+        require('./assets/cuisines/huicai.jpg'),
+        require('./assets/cuisines/dongbei.jpg'),
+        require('./assets/cuisines/jing.jpg'),
+        require('./assets/cuisines/xinjiang.jpg'),
+        require('./assets/cuisines/qingzhen.jpg'),
+        require('./assets/cuisines/huaiyang.jpg'),
+        require('./assets/cuisines/hubei.jpg'),
+        require('./assets/cuisines/chaozhou.jpg'),
+        require('./assets/cuisines/kejia.jpg'),
+        require('./assets/cuisines/west.jpg'),
+        require('./assets/cuisines/hongkong.jpg'),
+        require('./assets/cuisines/korea.jpg'),
+        require('./assets/cuisines/japan.jpg'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar

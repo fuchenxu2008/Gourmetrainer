@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, Animated } from 'react-native';
-import { Speech } from 'expo';
 import UserProfile from '../components/UserProfile';
 import { graphql } from 'react-apollo';
 import { GET_CURRENT_USER } from '../constants/GraphAPI';
@@ -17,7 +16,6 @@ export class SettingsScreen extends React.Component {
 
   // Called everytime the page is displayed
   load = (payload) => {
-    // Speech.speak('Fuck you ORA ORA ORA ORA ORA');
     try {
       const { type } = payload.action;
       const { data } = this.props;

@@ -21,7 +21,7 @@ export default class LinksScreen extends React.Component {
         <View style={styles.cardContainer}>
           {
             allTags.map((tag, i) => (
-              <TagCard key={i} tag={tag} onPress={() => this._handlePress(tag)} />
+              <TagCard key={i} tag={tag} index={i} onPress={() => this._handlePress(tag)} />
             ))
           }
         </View>
