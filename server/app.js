@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const { ApolloServer, gql } = require('apollo-server-express');
 const { port, mongoUrl } = require('./config');
 const {fetchUser} = require('./controllers/fetchUserWithToken')
-const {getReceipeLength,getMinMax,aggregateRecipe} = require("./controllers/addRecipeLevel")
+// const {getReceipeLength,getMinMax,aggregateRecipe} = require("./controllers/addRecipeLevel")
 
 // GraphQL Schema
 
@@ -58,4 +58,4 @@ app.listen(port, () => {
     console.log(`√ Server started at http://localhost:${port}`);
 });
 
-aggregateRecipe()
+// aggregateRecipe()
