@@ -31,9 +31,9 @@ export class SettingsScreen extends React.Component {
   render() {
     const { data } = this.props;
     return (
-        <View style={{ flex: 1 }}>
-          <UserProfile user={data.currentUser} />
-        </View>
+      <View style={{ flex: 1 }}>
+        <UserProfile user={data.currentUser} />
+      </View>
     );
   }
 }

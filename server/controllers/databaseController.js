@@ -21,7 +21,7 @@ function aggregateRecipe(){
     Recipe.aggregate(
         [
             {$group : {_id:"$tags",count:{$sum:1}}},
-            {$match : {count:{$gte:20}}},
+            // {$match : {count:{$gte:20}}},
         ],(err,aggregation)=>{
             console.log('aggregation: ', aggregation);
             // aggregation.forEach(cata => {

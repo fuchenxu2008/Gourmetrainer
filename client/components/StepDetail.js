@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
         // borderTopRightRadius: 27,
         borderRadius: 27,
         overflow: 'hidden',
+        // borderWidth: 7,
+        // borderColor: 'white',
     },
     stepImg: {
         flex: 1,

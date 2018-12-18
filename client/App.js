@@ -1,16 +1,26 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Text, AsyncStorage } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { persistCache } from 'apollo-cache-persist';
 import DropdownAlert from 'react-native-dropdownalert';
 import { DropDownHolder } from './util/alert';
 import typeDefs from './clientState/typeDef';
 import { defaults, resolvers } from './clientState/resolvers';
 import AppNavigator from './navigation/AppNavigator';
 
+const cache = new InMemoryCache();
+
+persistCache({
+  cache,
+  storage: AsyncStorage,
+});
+
 const client = new ApolloClient({
   uri: 'http://10.8.204.12:3333/graphql',
+  cache,
   clientState: {
     defaults,
     resolvers,

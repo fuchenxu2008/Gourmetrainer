@@ -4,20 +4,18 @@ const { CookedHistoryType, CookedHistoryQuery, CookedHistoryMutation } = require
 const { LevelType, LevelQuery } = require('./Level');
 const { RecipeType, RecipeQuery } = require('./Recipe');
 const { UserType, UserQuery, UserMutation } = require('./User');
-const { FileType, FileQuery, FileMutation } = require('./File')
 
 const Root = /* GraphQL */`
     type Query {
         getUser(_id: String, email: String): User
         getRecipe(_id: String!): Recipe
-        getRecipes(title: String, tags: String, limit: Int): [Recipe]
+        getRecipes(title: String, tags: String, level: Int, limit: Int): [Recipe]
+        getRandomRecipes(limit: Int): [Recipe]
         getLevel(_id: String, recipe: String): Level
         getLevels(level: Int!): [Level]
         getCookedHistory(_id: String!): CookedHistory
         getCookedHistories(user: String, recipe: String): [CookedHistory]
-        uploads: [File]
         loginUser(email:String!, password: String!): User
-        getRandomRecipes(limit:Int): [Recipe]  
     }
 
     type Mutation {
@@ -26,11 +24,6 @@ const Root = /* GraphQL */`
         createUser(params: UserInput!): User
         updateUser(_id: String!, params: UserInput!): User!
         deleteUser(_id: String!): User
-        singleUpload(file: Upload!): File!
-    }
-
-    type Subscriptions {
-        userUpdated: User
     }
 `;
 
@@ -42,16 +35,14 @@ const resolvers = [
     LevelQuery,
     RecipeQuery,
     UserQuery,
-    FileQuery,
     /**
      * Mutation
      */
     CookedHistoryMutation,
     UserMutation,
-    FileMutation,
 ];
 
 module.exports = makeExecutableSchema({
-    typeDefs: [Root, CookedHistoryType, LevelType, RecipeType, UserType, FileType],
+    typeDefs: [Root, CookedHistoryType, LevelType, RecipeType, UserType],
     resolvers,
 })

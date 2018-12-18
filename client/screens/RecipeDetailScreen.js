@@ -1,27 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, StyleSheet, Animated, TouchableHighlight } from 'react-native';
+import { Text, View, ScrollView, Image, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import { AntDesign } from '@expo/vector-icons'
 import { LinearGradient } from 'expo';
+import { GET_RECIPE } from '../constants/GraphAPI';
 import layout from '../constants/Layout';
-
-const GET_RECIPE = gql`
-  query getRecipe($_id: String!) {
-    getRecipe(_id: $_id) {
-      title
-      intro
-      albums
-      tags
-      ingredients
-      burden
-      steps {
-        img
-        step
-      }
-    }
-  }
-`;
 
 const { height, width } = layout.window;
 
@@ -38,8 +21,16 @@ export default class RecipeDetail extends Component {
     this.props.navigation.navigate('Ingredients', { recipe })
   }
 
+  _handleCompleteFetch = ({ getRecipe }) => {
+    // console.log('!!!');
+    const { autoCook } = this.props.navigation.state.params;
+    // console.log('autoCook: ', autoCook);
+    if (autoCook) this._handleEnterLearningMode(getRecipe);
+  }
+
   render() {
     const { _id } = this.props.navigation.state.params;
+
     const albumHeight = this.state.scrollY.interpolate({
       inputRange: [height * (-1), 0],
       outputRange: [height * 1.3, height * 0.35],
@@ -47,9 +38,9 @@ export default class RecipeDetail extends Component {
 
     return (
       <View style={styles.viewContainer}>
-        <Query query={GET_RECIPE} variables={{ _id }}>
+        <Query query={GET_RECIPE} variables={{ _id }} onCompleted={this._handleCompleteFetch}>
           {({ loading, error, data }) => {
-            if (loading) return <Text>No results</Text>;
+            if (loading) return <Text>Loading...</Text>;
             if (error) return <Text>{`Error!: ${error}`}</Text>;
             {/** Detail Page */}
             const { title, albums, intro, tags, ingredients, burden, steps } = data.getRecipe;
@@ -99,21 +90,21 @@ export default class RecipeDetail extends Component {
                     }
                   </View>
                 </ScrollView>
-                <TouchableHighlight onPress={() => this._handleEnterLearningMode(data.getRecipe)}>
-                  <LinearGradient
-                    colors={['#89f7fe', '#66a6ff']}
-                    start={[0, 0]}
-                    end={[1, 1]}
-                    location={[0.25, 0.4]}
-                    style={styles.playIconContainer}
-                  >
+                <LinearGradient
+                  colors={['#89f7fe', '#66a6ff']}
+                  start={[0, 0]}
+                  end={[1, 1]}
+                  location={[0.25, 0.4]}
+                  style={styles.playIconContainer}
+                >
+                  <TouchableOpacity onPress={() => this._handleEnterLearningMode(data.getRecipe)}>
                     <AntDesign
                         name='caretright'
                         size={40}
                         style={styles.playIcon}
                     />
-                  </LinearGradient>
-                </TouchableHighlight>
+                  </TouchableOpacity>
+                </LinearGradient>
               </View>
             )
           }}

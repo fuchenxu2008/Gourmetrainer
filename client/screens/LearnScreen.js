@@ -17,7 +17,10 @@ export default class LinksScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.scrollContainer} contentContainerStyle={{ paddingBottom: 0.1 * height }}>
-        <Text style={styles.heading}>Learning Hub</Text>
+        <View style={styles.headerSection}>
+          <Text style={styles.heading}>Learning Center</Text>
+          <Text style={styles.smallerheading}>Learn to Master Different Cuisines</Text>
+        </View> 
         <View style={styles.cardContainer}>
           {
             allTags.map((tag, i) => (
@@ -36,11 +39,18 @@ const styles = StyleSheet.create({
     paddingTop: 70,
     backgroundColor: 'rgb(250, 250, 250)',
   },
+  headerSection: {
+    paddingHorizontal: '8%',
+  },
   heading: {
     fontSize: 30,
     fontWeight: 'bold',
-    paddingHorizontal: '8%',
-    marginBottom: 20,
+    marginBottom: 5,
+    color: 'color: rgb(70, 70, 70)',
+  },
+  smallerheading: {
+    fontSize: 20,
+    color: 'rgb(150, 150, 150)',
   },
   cardContainer: {
     flex: 1,

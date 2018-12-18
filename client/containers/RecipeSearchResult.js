@@ -8,21 +8,25 @@ const { height } = layout.window;
 
 export default class RecipeSearchResult extends Component {
   render() {    
-    const { title, tags, limit } = this.props;
-    if (!title || title === '') return null;
+    let { term, limit } = this.props;
+    if (!term) return null;
+    let title = '';
+    let tags = '';
+    term.startsWith('#')
+        ? tags = term.trim().split('#')[1]
+        : title = term;
+
     return (
         <ScrollView style={styles.searchContainer}>
             <Query query={SEARCH_RECIPES} variables={{ title, tags, limit }}>
                 {({ loading, error, data }) => {
-                    if (loading) return <Text>No results</Text>;
+                    if (loading) return <Text>Loading...</Text>;
                     if (error) return <Text>{`Error!: ${error}`}</Text>;
 
                     return (
-                  
-                            data.getRecipes.map(recipe => (
-                                <RecipeCard recipe={recipe} key={recipe._id} />
-                            ))
-          
+                        data.getRecipes.map(recipe => (
+                            <RecipeCard recipe={recipe} key={recipe._id} />
+                        ))
                     )
                 }}
             </Query>

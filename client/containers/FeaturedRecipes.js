@@ -13,9 +13,9 @@ export default class FeaturedRecipes extends Component {
     const { limit } = this.props;
     return (
         <View>
-            <Query query={GET_FEATURED} variables={{ limit }}>
+            <Query query={GET_FEATURED} variables={{ limit }} fetchPolicy='cache-and-network'>
                 {({ loading, error, data }) => {
-                    if (loading) return <Text style={styles.scrollContainer}>No results</Text>;
+                    if (loading) return <Text style={styles.scrollContainer}>Loading...</Text>;
                     if (error) return <Text style={styles.scrollContainer}>{`Error!: ${error}`}</Text>;
 
                     return (

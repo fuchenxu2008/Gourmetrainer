@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { ApolloConsumer, graphql } from 'react-apollo';
 import StepDetail from '../components/StepDetail';
-// import Button from '../components/Button';
+import { LinearGradient } from 'expo';
+import { DropDownHolder } from '../util/alert';
 import Timer from '../components/Timer';
 import VoiceOver from '../components/VoiceOver';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
+import { ADD_COOK_HISTORY, GET_CURRENT_USER } from '../constants/GraphAPI';
 
-export default class LearnStepScreen extends Component {
+export class LearnStepScreen extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -22,21 +25,42 @@ export default class LearnStepScreen extends Component {
   _handlePrevStep = (currentStep) => {
     this.setState({ currentStep: currentStep - 1 })
   }
+
+  _handleFinishCook = async(client, recipeId) => {
+    console.log('recipeId: ', recipeId);
+    const { currentUser } = this.props.data;
+    console.log('currentUser: ', currentUser.nickname);
+    try {
+      const { data } = await client.mutate({ mutation: ADD_COOK_HISTORY, variables: { user: currentUser._id, recipe: recipeId } })
+      if (data.addCookedHistory._id) {
+        DropDownHolder.alert('success', 'Success', 'Added to Cook History!')
+        this.props.navigation.pop(2);
+      } else throw "Network error maybe...";
+    } catch (error) {
+      DropDownHolder.alert('error', 'Error', error.message)
+    }
+  }
   
   render() {
     const { recipe } = this.props.navigation.state.params;
-    const { steps } = recipe;
+    const { steps, _id } = recipe;
     const { currentStep } = this.state;
     const activeStep = steps[currentStep - 1];
 
     return (
       <View style={styles.outestContainer}>
-        <View style={styles.headerSection}>
+        <LinearGradient
+          colors={['rgb(116, 114, 113)', 'rgb(54, 52, 51)']}
+          start={[0, 0]}
+          end={[1, 1]}
+          location={[0.25, 0.4]}
+          style={styles.headerSection}
+        >
           <Text style={styles.heading}>Step {currentStep} <Text style={styles.smallerHeading}>of {steps.length}</Text></Text>
           <StepDetail
             activeStep={activeStep}
           />
-        </View>
+        </LinearGradient>
         <View style={styles.utilSection}>
           <Timer />
           <VoiceOver text={activeStep.step} />
@@ -61,12 +85,27 @@ export default class LearnStepScreen extends Component {
                 <Entypo name='chevron-with-circle-right' size={46} />
               </TouchableOpacity>
             }
+            {
+              currentStep === steps.length &&
+              <ApolloConsumer>
+                {client => (
+                  <TouchableOpacity
+                    onPress={() => this._handleFinishCook(client, _id)}
+                    style={styles.switchStepButton}
+                  >
+                    <Feather name='check-circle' size={46} color='rgb(118, 209, 106)' />
+                  </TouchableOpacity>
+                )}
+              </ApolloConsumer>
+            }
           </View>
         </View>
       </View>
     )
   }
 }
+
+export default graphql(GET_CURRENT_USER)(LearnStepScreen);
 
 const styles = StyleSheet.create({
   outestContainer: {
@@ -76,8 +115,8 @@ const styles = StyleSheet.create({
   },
   headerSection: {
     paddingTop: 70,
-    backgroundColor: 'rgb(59, 57, 56)',
-    borderBottomLeftRadius: 37,
+    // backgroundColor: 'rgb(59, 57, 56)',
+    borderRadius: 37,
     borderBottomRightRadius: 37,
     // flex: 1,
     marginBottom: '10%',

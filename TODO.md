@@ -4,7 +4,5 @@
 
 * [x] Redux, GraphQL hookup
 * [ ] Frontend development
-* [ ] Data customization/difficulty
-* [ ] Email verification
-* [ ] Voice input
+* [x] Data customization/difficulty
 * [ ] Done

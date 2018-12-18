@@ -4,7 +4,6 @@ import { LinearGradient } from 'expo';
 import layout from '../constants/Layout';
 const { width } = layout.window;
 
-
 const tagImgList = [
     require('../assets/cuisines/chuancai.jpg'),
     require('../assets/cuisines/lucai.jpeg'),
@@ -37,10 +36,7 @@ export default class TagCard extends Component {
                     <Image source={tagImgList[index]} style={styles.tagImg} />
                 </View>
                 <LinearGradient
-                    colors={['#FFFFFF', '#FFFFFF00']}
-                    start={[0, 0]}
-                    end={[1, 0]}
-                    // location={[0.25, 0.4]}
+                    start={[0.5, 1]} end={[0.5, 0]} colors={[ 'rgba(255,255,255,1)', 'rgba(255,255,255,0.6)', 'rgba(255,255,255,0)']}
                     style={styles.textContainer}
                 >
                     <Text style={styles.tagText}>{tag}</Text>
@@ -60,7 +56,11 @@ const styles = StyleSheet.create({
         marginTop: width * 0.06,
         flexDirection: 'column',
         alignItems: 'center',
-        overflow: 'hidden',
+        // overflow: 'hidden',
+        shadowOffset:{  width: 3,  height: 5,  },
+        shadowColor: 'rgb(190, 190, 190)',
+        shadowOpacity: 0.2,
+        // shadowRadius: 5,
     },
     imgContainer: {
         width: '100%',
@@ -70,18 +70,21 @@ const styles = StyleSheet.create({
         flex: 1,
         width: null,
         height: null,
+        borderRadius: 10,
     },
     textContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         position: 'absolute',
         bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
         width: '100%',
-        padding: 10,
+        paddingBottom: 10,
+        paddingTop: 30,
+        borderRadius: 10,
     },
     tagText: {
-        // fontWeight: 'bold'
-        fontSize: 15
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: 'rgb(50, 50, 50)',
     }
 })

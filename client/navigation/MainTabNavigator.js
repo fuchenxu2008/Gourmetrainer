@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import colors from '../constants/Colors';
 
 import TabBarIcon from '../components/TabBarIcon';
 import RecipeDiscoverScreen from '../screens/RecipeDiscoverScreen';
@@ -41,18 +42,26 @@ DiscoverStack.navigationOptions = ({ navigation }) => {
 const LearnStack = createStackNavigator({
   Learn: LearnScreen,
   TagCenter: TagCenter,
+  RecipeDetail: RecipeDetailScreen,
   Ingredients: IngredientsScreen,
   LearnStep: LearnStepScreen,
 });
 
-LearnStack.navigationOptions = {
-  tabBarLabel: 'Learn',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name='rocket1'
-    />
-  ),
+LearnStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarLabel: 'Learn',
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name='rocket1'
+      />
+    ),
+    tabBarVisible,
+  }
 };
 
 const SettingsStack = createStackNavigator({
@@ -85,7 +94,8 @@ export default createBottomTabNavigator({
 }, {
   tabBarOptions: {
     style: {
-      borderTopColor: "transparent"
-    }
+      borderTopColor: "transparent",
+    },
+    activeTintColor: colors.tintColor,
   }
 });

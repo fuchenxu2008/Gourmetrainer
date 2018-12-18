@@ -36,6 +36,24 @@ export const LOGIN_USER = gql`
   }
 `;
 
+export const GET_RECIPE = gql`
+  query getRecipe($_id: String!) {
+    getRecipe(_id: $_id) {
+      _id
+      title
+      intro
+      albums
+      tags
+      ingredients
+      burden
+      steps {
+        img
+        step
+      }
+    }
+  }
+`;
+
 export const GET_FEATURED = gql`
     query FeaturedRecipes($limit: Int) {
         getRandomRecipes(limit: $limit) {
@@ -54,6 +72,39 @@ export const SEARCH_RECIPES = gql`
             title
             albums
             tags
+            level
         }
     }
+`;
+
+export const GET_RECIPES_BY_LEVEL = gql`
+    query GetRecipesByLevel($tags: String!, $level: Int!) {
+      getRecipes(tags: $tags, level: $level) {
+        _id
+        title
+        albums
+      }
+    }
+`;
+
+export const ADD_COOK_HISTORY = gql`
+  mutation AddCookedHistory($user: String!, $recipe: String!) {
+    addCookedHistory(user: $user, recipe: $recipe) {
+      _id
+    }
+  }
+`;
+
+export const GET_COOK_HISTORIES = gql`
+  query GetUserCookedHistory($user: String!) {
+    getCookedHistories(user: $user) {
+      _id
+      recipe {
+        title
+        _id
+        albums
+        tags
+      }
+    }
+  }
 `;
