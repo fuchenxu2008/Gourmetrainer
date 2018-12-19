@@ -67,6 +67,9 @@ LearnStack.navigationOptions = ({ navigation }) => {
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
   Welcome: WelcomeScreen,
+  RecipeDetail: RecipeDetailScreen,
+  Ingredients: IngredientsScreen,
+  LearnStep: LearnStepScreen,
 });
 
 SettingsStack.navigationOptions = ({ navigation }) => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, ScrollView, Image, Animated } from 'react-native';
 import { LinearGradient } from 'expo';
+import CookedHistory from '../containers/CookedHistory';
 import avatar from '../assets/images/default_male.png';
 
 const HEADER_MAX_HEIGHT = 140;
@@ -94,7 +95,8 @@ export default class UserProfile extends Component {
                     }}>
                         <Image source={avatar} style={styles.profileAvatar} />
                     </Animated.View>
-                    <View><Text style={styles.profileNickname}>{nickname}</Text></View>        
+                    <Text style={styles.profileNickname}>Welcome <Text style={styles.nickname}>{nickname}</Text></Text>
+                    <CookedHistory user={user} />
                 </ScrollView>
             </View>
         );
@@ -140,7 +142,13 @@ const styles = StyleSheet.create({
     },
     profileNickname: {
         fontWeight: 'bold',
-        fontSize: 20,
-        color: 'rgb(70, 70, 70)'
+        fontSize: 25,
+        color: 'rgb(100, 100, 100)',
+        alignSelf: 'flex-start',
+        marginTop: 10,
+        marginBottom: 20,
+    },
+    nickname: {
+        color: 'rgb(150, 150, 150)'
     }
 })

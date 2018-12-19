@@ -7,7 +7,7 @@ import { DropDownHolder } from '../util/alert';
 import Timer from '../components/Timer';
 import VoiceOver from '../components/VoiceOver';
 import { Entypo, Feather } from '@expo/vector-icons';
-import { ADD_COOK_HISTORY, GET_CURRENT_USER } from '../constants/GraphAPI';
+import { ADD_COOK_HISTORY, GET_CURRENT_USER, GET_COOK_HISTORIES } from '../constants/GraphAPI';
 
 export class LearnStepScreen extends Component {
   static navigationOptions = {
@@ -27,11 +27,16 @@ export class LearnStepScreen extends Component {
   }
 
   _handleFinishCook = async(client, recipeId) => {
-    console.log('recipeId: ', recipeId);
     const { currentUser } = this.props.data;
-    console.log('currentUser: ', currentUser.nickname);
     try {
-      const { data } = await client.mutate({ mutation: ADD_COOK_HISTORY, variables: { user: currentUser._id, recipe: recipeId } })
+      const { data } = await client.mutate({
+        mutation: ADD_COOK_HISTORY,
+        variables: { user: currentUser._id, recipe: recipeId },
+        refetchQueries: [{
+          query: GET_COOK_HISTORIES,
+          variables: { user: currentUser._id },
+        }]
+      })
       if (data.addCookedHistory._id) {
         DropDownHolder.alert('success', 'Success', 'Added to Cook History!')
         this.props.navigation.pop(2);

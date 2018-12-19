@@ -16,11 +16,9 @@ export default class RecipeSearchResult extends Component {
         ? tags = term.trim().split('#')[1]
         : title = term;
 
-    console.log(title, tags, limit);
-
     return (
         <ScrollView style={styles.searchContainer}>
-            <Query query={SEARCH_RECIPES} variables={{ title, tags, limit }} fetchPolicy='cache-and-network' onCompleted={(data) => console.log(data)}>
+            <Query query={SEARCH_RECIPES} variables={{ title, tags, limit }} fetchPolicy='cache-and-network'>
                 {({ loading, error, data }) => {
                     if (loading) return <Text>Loading...</Text>;
                     if (error) return <Text>{`Error!: ${error}`}</Text>;

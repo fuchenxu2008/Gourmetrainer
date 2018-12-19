@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import { Query } from 'react-apollo';
 import { GET_RECIPES_BY_LEVEL } from '../constants/GraphAPI';
 import LevelCard from '../components/LevelCard';
@@ -27,6 +28,12 @@ export default class TagCenter extends Component {
             <ScrollView style={styles.outestContainer} contentContainerStyle={{ paddingBottom: 0.1 * height }}>
                 <View style={styles.headerSection}>
                     <Text style={styles.titleTag}>{tag}</Text>
+                    <View style={styles.hint}>
+                        <AntDesign name='bulb1' size={24} color='yellow' style={styles.bulbIcon} />
+                        <Text style={styles.smallerText}>
+                            There are recipes of multiple levels to learn, finish at least one recipe in one level to unlock the more advanced.
+                        </Text>
+                    </View>
                 </View>
                 {
                     levelSet.map(level => (
@@ -73,11 +80,29 @@ const styles = StyleSheet.create({
     },
     headerSection: {
         paddingHorizontal: '6%',
-        marginBottom: 30,
+        marginBottom: 20,
     },
     titleTag: {
         fontWeight: 'bold',
         fontSize: 35,
+        marginBottom: 15,
+    },
+    bulbIcon: {
+        marginRight: 10,
+    },
+    hint: {
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: 'rgb(200, 200, 200)',
+        borderRadius: 10,
+        overflow: 'hidden',
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+    },
+    smallerText: {
+        flex: 1,
+        fontSize: 18,
+        color: 'white',
     },
     levelScroller: {
         flex: 1,
