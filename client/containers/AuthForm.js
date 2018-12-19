@@ -52,7 +52,7 @@ export default class AuthForm extends Component {
       }
       // Request remote to register
       try {
-        const { data } = await client.mutate({ mutation: CREATE_USER, variables: { params: { nickname, email, password, gender } } })
+        const { data } = await client.mutate({ mutation: CREATE_USER, variables: { params: { nickname, email, password, gender } }, fetchPolicy: 'network-only' })
         // Save current user to local cache
         client.writeQuery({
           query: GET_CURRENT_USER,
@@ -72,7 +72,7 @@ export default class AuthForm extends Component {
       }
       // Request remote to login
       try {
-        const { data } = await client.query({ query: LOGIN_USER, variables: { email, password } })
+        const { data } = await client.query({ query: LOGIN_USER, variables: { email, password }, fetchPolicy: 'network-only' })
         // Save current user to local cache
         client.writeQuery({
           query: GET_CURRENT_USER,
