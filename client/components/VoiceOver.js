@@ -14,25 +14,26 @@ export default class VoiceOver extends Component {
     const { text } = this.props;
 
     return (
-      <TouchableOpacity style={styles.outestContainer} onPress={() => this._speakText(text)}>
-        <MaterialCommunityIcons
-          name='voice'
-          size={33}
-          color='rgb(70, 70, 70)'
-        />
-        <Text style={styles.voiceOverText}>VoiceOver</Text>
-      </TouchableOpacity>
+      <View style={styles.outestContainer}>
+        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => this._speakText(text)}>
+          <MaterialCommunityIcons
+            name='voice'
+            size={33}
+            color='rgb(70, 70, 70)'
+          />
+          <Text style={styles.voiceOverText}>Speak</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
     outestContainer: {
-        // flex: 1,
-        flexDirection: 'row',
-        // backgroundColor: 'blue',
-        borderRadius: 16,
-        paddingVertical: 10,
+      flex: 1,
+      // backgroundColor: 'blue',
+      paddingVertical: 10,
+      alignItems: 'flex-end',
     },
     voiceOverText: {
       fontSize: 27,

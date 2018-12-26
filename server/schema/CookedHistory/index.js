@@ -1,4 +1,4 @@
-const CookedHistoryType = require('./typeDef');
+const CookedHistoryType = require('./typeDef.gql');
 const CookedHistoryQuery = require('./query');
 const CookedHistoryMutation = require('./mutation');
 

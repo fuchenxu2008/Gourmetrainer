@@ -1,5 +1,4 @@
-export default `
-
+export default /* GraphQL */`
     type Query {
         currentUser: User
     }
@@ -17,7 +16,7 @@ export default `
         gender: String!
         token: String
         avatar: String
-        cookedHistories: [CookedHistory] !
+        cookedHistories: [CookedHistory]!
     }
 
     type CookedHistory {

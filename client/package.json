@@ -23,10 +23,7 @@
     "react-native-dropdownalert": "^3.8.0",
     "react-native-elements": "^1.0.0-beta7",
     "react-native-picker-select": "^5.1.1",
-    "react-navigation": "^2.18.2",
-    "react-redux": "^5.1.1",
-    "redux": "^4.0.1",
-    "redux-logger": "^3.0.6"
+    "react-navigation": "^2.18.2"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
