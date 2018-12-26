@@ -1,31 +1,54 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, ScrollView, Image } from 'react-native';
+import { LinearGradient } from 'expo';
 import layout from '../constants/Layout';
 const { height, width } = layout.window;
 
 export default class StepDetail extends Component {
     render() {
-        const { activeStep } = this.props;
-        const { step, img } = activeStep;
+        const { currentStep, stepLength } = this.props;
+        const { step, img, index } = currentStep;
 
         return (
-            <View style={styles.outestContainer}>
-                <ScrollView style={styles.stepTextBox}>
-                    <Text style={styles.stepText}>{step}</Text>
-                </ScrollView>
-                <View style={styles.stepImgBox}>
-                    <Image source={{ uri: img }} style={styles.stepImg} />
+            <LinearGradient
+                colors={['rgb(116, 114, 113)', 'rgb(54, 52, 51)']}
+                start={[0, 0]}
+                end={[1, 1]}
+                location={[0.25, 0.4]}
+                style={styles.headerSection}
+            >
+                <View>
+                    <Text style={styles.heading}>
+                        Step {index} <Text style={styles.smallerHeading}>of {stepLength}</Text>
+                    </Text>
+                    <ScrollView style={styles.stepTextBox}>
+                        <Text style={styles.stepText}>{step}</Text>
+                    </ScrollView>
+                    <View style={styles.stepImgBox}>
+                        <Image source={{ uri: img }} style={styles.stepImg} />
+                    </View>
                 </View>
-            </View>
+            </LinearGradient>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    outestContainer: {
-        // flex: 1,
-        // backgroundColor: 'blue',
-        
+    headerSection: {
+        paddingTop: 70,
+        borderRadius: 37,
+        borderBottomRightRadius: 37,
+        marginBottom: '10%',
+    },
+    heading: {
+        fontSize: 40,
+        paddingHorizontal: '6%',
+        marginBottom: 30,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    smallerHeading: {
+        fontSize: 30,
     },
     stepTextBox: {
         height: 0.125 * height,
@@ -41,12 +64,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width,
         height: width * 4 / 5,
-        // borderTopLeftRadius: 27,
-        // borderTopRightRadius: 27,
         borderRadius: 27,
         overflow: 'hidden',
-        // borderWidth: 7,
-        // borderColor: 'white',
     },
     stepImg: {
         flex: 1,

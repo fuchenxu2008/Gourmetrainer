@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Vibration, Alert } from 'react-native';
+import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import alarmSound from '../assets/audios/Radar.mp3';
 
 const getTimerString = (duration) => {
   if (duration === 0) return 'Timer';
@@ -18,34 +20,35 @@ export default class Timer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-   const { value, status } = nextProps;
+   const { value, status, currentStep } = nextProps;
+   if (currentStep !== this.props.currentStep) return; //Prevent re-counting down after step change
    const timerValue = getTimerValue(value);
-   this.setState({ timerValue })
-   
-   if (status) {
+   this.setState({ timerValue }); // Single source of truth for timer remaining value
+   if (status) { // If timer is running
       if (timerValue <= 0) {
-        return this._handleStop();
+        return this._handleStop(); // Timer done
       }
-      this.timer = setInterval(() => {
-        this.countDown()
-      }, 1000);
-      console.log('timer started');
+      if (!this.timer) {  // Debounce timer
+        this.timer = setInterval(() => {
+          this.countDown()
+        }, 1000);
+        console.log('timer started');
+      }
     }
   }
 
   countDown = () => {
     this.setState((prevState) => {
-      if (prevState.timerValue - 1 < 0) {
-        // Vibration
-        let vibration = setInterval(() => {
-          Vibration.vibrate(1000)
-        }, 1000);
+      if (prevState.timerValue - 1 <= 0) {
+        // Alarm
+        this.runAlarm()
+        let alarm = setInterval(this.runAlarm, 3000);
         // Alert
         Alert.alert(
           'Timer Done',
           'Let\'s get back to cooking!',
           [
-            {text: 'OK', onPress: () => clearInterval(vibration)},  // Stop vibration
+            {text: 'OK', onPress: () => clearInterval(alarm)},  // Stop vibration
           ],
           { cancelable: false }
         )
@@ -56,12 +59,18 @@ export default class Timer extends Component {
     });
   }
 
+  runAlarm = () => {
+    Vibration.vibrate(3000)
+    Audio.Sound.createAsync(alarmSound, { shouldPlay: true });
+  }
+
   componentWillUnmount() {
     this._handleStop();
   }
 
   _handleStop = () => {
     clearInterval(this.timer);
+    this.timer = undefined;
     this.props.onStopPress();
   }
 
@@ -88,9 +97,7 @@ export default class Timer extends Component {
 const styles = StyleSheet.create({
     outestContainer: {
       flex: 1,
-      // backgroundColor: 'green',
       paddingVertical: 10,
-      // alignItems: 'center',
     },
     timerText: {
       fontSize: 27,
