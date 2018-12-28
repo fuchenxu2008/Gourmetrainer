@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Rating } from 'react-native-elements';
 import layout from '../constants/Layout';
 const { width } = layout.window;
 
@@ -16,15 +15,8 @@ export default class LevelCard extends Component {
                 <View style={styles.rightSection}>
                     <TouchableOpacity style={styles.detailSection} onPress={() => onPressDetail(_id)}>
                         <Text style={styles.recipeTitle}>{title}</Text>
-                        <Rating
-                            // showRating={false}
-                            type='star'
-                            readonly
-                            ratingCount={5}
-                            startingValue={level}
-                            imageSize={25}
-                            style={{ paddingVertical: 10, alignSelf: 'flex-start' }}
-                        />
+                        <Text style={styles.smallerText}>Difficulty</Text>
+                        <Text style={styles.difficulty}>{new Array(level || 1).fill('🍖').join('')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -40,9 +32,7 @@ const styles = StyleSheet.create({
         width: 0.88 * width,
         height: 10 / 25 * width,
         marginRight: 0.12 * width,
-        // backgroundColor: 'white',
         backgroundColor: 'transparent',
-        // overflow: 'hidden',
     },
     albumImgBox: {
         position: 'absolute',
@@ -51,11 +41,10 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: '65%',
         zIndex: 10,
-        // overflow: 'hidden',
-        shadowOffset:{  width: 2,  height: 5,  },
-        shadowColor: 'rgb(200, 200, 200)',
-        shadowOpacity: 0.9,
-        // shadowRadius: 5
+        shadowOffset:{  width: 3,  height: 2,  },
+        shadowColor: 'rgb(220, 220, 220)',
+        shadowOpacity: 0.7,
+        shadowRadius: 7,
     },
     albumImg: {
         flex: 1,
@@ -66,11 +55,10 @@ const styles = StyleSheet.create({
     rightSection: {
         flex: 1,
         justifyContent: 'flex-end',
-        // borderRadius: 10,
-        shadowOffset:{  width: 2,  height: 5,  },
-        shadowColor: 'rgb(200, 200, 200)',
-        shadowOpacity: 0.9,
-        // shadowRadius: 5
+        shadowOffset:{  width: 1,  height: 2,  },
+        shadowColor: 'rgb(220, 220, 220)',
+        shadowOpacity: 0.5,
+        shadowRadius: 7,
     },
     detailSection: {
         borderRadius: 10,
@@ -83,6 +71,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: 'rgb(70, 70, 70)',
+        marginBottom: 8,
     },
-
+    smallerText: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: 'rgb(180,180,180)',
+        marginBottom: 4,
+    },
+    difficulty: {
+        fontSize: 20,
+    }
 })

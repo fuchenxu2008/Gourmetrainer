@@ -72,7 +72,6 @@ export const SEARCH_RECIPES = gql`
             title
             albums
             tags
-            level
         }
     }
 `;

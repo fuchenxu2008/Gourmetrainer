@@ -19,8 +19,8 @@ persistCache({
 });
 
 const client = new ApolloClient({
-  uri: 'http://10.8.204.12:3333/graphql',
-  // uri: 'http://kyrie.top:3333/graphql',
+  // uri: 'http://10.9.26.203:3333/graphql',
+  uri: 'http://kyrie.top:3333/graphql',
   cache,
   clientState: {
     defaults,
