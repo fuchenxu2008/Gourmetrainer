@@ -7,7 +7,7 @@ import Timer from '../components/Timer';
 import VoiceOver from '../components/VoiceOver';
 import TimerPicker from '../components/TimerPicker';
 import StepButtonGroup from '../components/StepButtonGroup';
-import { ADD_COOK_HISTORY, GET_CURRENT_USER, GET_COOK_HISTORIES } from '../constants/GraphAPI';
+import { ADD_COOK_HISTORY, GET_CURRENT_USER, GET_COOK_HISTORIES, UPDATE_USER_LEVEL } from '../constants/GraphAPI';
 
 export class LearnStepScreen extends Component {
   static navigationOptions = {
@@ -87,16 +87,41 @@ export class LearnStepScreen extends Component {
     this.setState({ processing: true })
     try {
       // Add cook history
-      const { data } = await client.mutate({
+      const addHistoryRes = await client.mutate({
         mutation: ADD_COOK_HISTORY,
         variables: { user: currentUser._id, recipe: recipeId },
         refetchQueries: [{
           query: GET_COOK_HISTORIES,
           variables: { user: currentUser._id },
-        }]
+        }],
       })
-      // Report Success
-      if (data.addCookedHistory._id) {
+  
+      // if cook history added
+      if (addHistoryRes.data.addCookedHistory._id) {
+        const { recipe } = this.props.navigation.state.params;
+        const { level, tags } = recipe;
+        const userLevelSet = currentUser.userLevel.levelSet || {};
+        const maxLevel = (userLevelSet[tags] || 0) + 1;
+        // If finish current level
+        console.log('level:', level, 'maxlevel:', maxLevel);
+        if (level === maxLevel && maxLevel < 5) {
+          const { data } = await client.mutate({
+            mutation: UPDATE_USER_LEVEL,
+            variables: { user: currentUser._id, category: tags },
+          })
+          if (data.updateUserLevel) {
+            client.writeQuery({
+              query: GET_CURRENT_USER,
+              data: {
+                currentUser: {
+                  ...currentUser,
+                  userLevel: data.updateUserLevel,
+                }
+              }
+            });
+          }
+        }
+        // Report success
         DropDownHolder.alert('success', 'Success', 'Added to Cook History!')
         this.props.navigation.pop(2);
       } else throw "Network error maybe...";

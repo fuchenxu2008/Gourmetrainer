@@ -8,6 +8,9 @@ export const CREATE_USER = gql`
       email
       token
       gender
+      userLevel {
+        levelSet
+      }
     }
   }
 `;
@@ -20,6 +23,9 @@ export const GET_CURRENT_USER = gql`
       email
       token
       gender
+      userLevel {
+        levelSet
+      }
     }
   }
 `;
@@ -32,6 +38,9 @@ export const LOGIN_USER = gql`
       email
       token
       gender
+      userLevel {
+        levelSet
+      }
     }
   }
 `;
@@ -46,6 +55,7 @@ export const GET_RECIPE = gql`
       tags
       ingredients
       burden
+      level
       steps {
         img
         step
@@ -107,3 +117,19 @@ export const GET_COOK_HISTORIES = gql`
     }
   }
 `;
+
+export const GET_USER_LEVEL = gql`
+  query GetUserLevel($user: String!) {
+    getUserLevel(userid: $user) {
+      levelSet
+    }
+  }
+`
+
+export const UPDATE_USER_LEVEL = gql`
+  mutation updateUserLevel($user: String!, $category: String!) {
+    updateUserLevel(userid: $user, category: $category) {
+      levelSet
+    }
+  }
+`

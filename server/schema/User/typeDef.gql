@@ -16,5 +16,6 @@ module.exports = `
         token: String
         avatar: String
         cookedHistories: [CookedHistory]!
+        userLevel: UserLevel
     }
 `;

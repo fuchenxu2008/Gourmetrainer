@@ -1,8 +1,8 @@
 const UserModel = require('./model');
 const CookedHistoryModel = require('../CookedHistory/model');
+const UserLevel = require('../UserLevel/model');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-
 
 const resolvers = {
     Query: {
@@ -27,7 +27,8 @@ const resolvers = {
         }
     },
     User: {
-        cookedHistories: async (user) => await CookedHistoryModel.find({ user })
+        cookedHistories: async (user) => await CookedHistoryModel.find({ user }),
+        userLevel: async (user) => await UserLevel.findOne({ userid: user._id }) || {}
     }
 }
 

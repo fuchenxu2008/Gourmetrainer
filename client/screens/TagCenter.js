@@ -24,7 +24,9 @@ export default class TagCenter extends Component {
     }
 
     render() {
-        const { tag } = this.props.navigation.state.params;
+        const { tag, user } = this.props.navigation.state.params;
+        const userLevelSet = user.userLevel.levelSet || {};
+        const maxLevel = (userLevelSet[tag] || 0) + 1;
 
         return (
             <ScrollView style={styles.outestContainer} contentContainerStyle={{ paddingBottom: 0.1 * height }}>
@@ -55,7 +57,7 @@ export default class TagCenter extends Component {
                                 return (
                                     <View style={styles.levelSection}>
                                         {   // Locked level markup
-                                            level > 2 &&
+                                            level > maxLevel &&
                                             <View style={styles.lockedLevel}>
                                                 <View style={styles.doubleStripe}>
                                                     <View style={styles.lockStripe} />

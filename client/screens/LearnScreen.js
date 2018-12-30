@@ -1,17 +1,26 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { graphql } from 'react-apollo';
+import { GET_CURRENT_USER, GET_USER_LEVEL } from '../constants/GraphAPI';
 import TagCard from '../components/TagCard';
 import allTags from '../constants/Tags';
 import layout from '../constants/Layout';
 const { height } = layout.window;
 
-export default class LinksScreen extends React.Component {
+export class LearnScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
   _handlePress = (tag) => {
-    this.props.navigation.navigate('TagCenter', { tag })
+    try {
+      const user = this.props.data.currentUser;
+      user
+        ? this.props.navigation.navigate('TagCenter', { tag, user })
+        : this.props.navigation.navigate('Welcome')
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {
@@ -32,6 +41,8 @@ export default class LinksScreen extends React.Component {
     );
   }
 }
+
+export default graphql(GET_CURRENT_USER)(LearnScreen);
 
 const styles = StyleSheet.create({
   scrollContainer: {

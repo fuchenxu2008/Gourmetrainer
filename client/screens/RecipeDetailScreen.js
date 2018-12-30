@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, Image, StyleSheet, Animated, TouchableOpacity } from 'react-native';
-import { Query } from 'react-apollo';
-import { AntDesign } from '@expo/vector-icons'
-import { LinearGradient } from 'expo';
-import { GET_RECIPE } from '../constants/GraphAPI';
+import { Query, graphql } from 'react-apollo';
+import { GET_RECIPE, GET_CURRENT_USER } from '../constants/GraphAPI';
 import layout from '../constants/Layout';
+import PlayButton from '../components/PlayButton';
 
 const { height, width } = layout.window;
 
-export default class RecipeDetail extends Component {
+export class RecipeDetail extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -18,13 +17,17 @@ export default class RecipeDetail extends Component {
   }
 
   _handleEnterLearningMode = (recipe) => {
-    this.props.navigation.navigate('Ingredients', { recipe })
+    try {
+      this.props.data.currentUser
+        ? this.props.navigation.navigate('Ingredients', { recipe })
+        : this.props.navigation.navigate('Welcome')
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   _handleCompleteFetch = ({ getRecipe }) => {
-    // console.log('!!!');
     const { autoCook } = this.props.navigation.state.params;
-    // console.log('autoCook: ', autoCook);
     if (autoCook) this._handleEnterLearningMode(getRecipe);
   }
 
@@ -90,21 +93,9 @@ export default class RecipeDetail extends Component {
                     }
                   </View>
                 </ScrollView>
-                <LinearGradient
-                  colors={['#89f7fe', '#66a6ff']}
-                  start={[0, 0]}
-                  end={[1, 1]}
-                  location={[0.25, 0.4]}
-                  style={styles.playIconContainer}
-                >
-                  <TouchableOpacity onPress={() => this._handleEnterLearningMode(data.getRecipe)}>
-                    <AntDesign
-                        name='caretright'
-                        size={40}
-                        style={styles.playIcon}
-                    />
-                  </TouchableOpacity>
-                </LinearGradient>
+                { // Learn mode play button
+                  <PlayButton onPress={() => this._handleEnterLearningMode(data.getRecipe)} />
+                }
               </View>
             )
           }}
@@ -113,6 +104,8 @@ export default class RecipeDetail extends Component {
     )
   }
 }
+
+export default graphql(GET_CURRENT_USER)(RecipeDetail);
 
 const styles = StyleSheet.create({
   viewContainer: {
@@ -187,23 +180,4 @@ const styles = StyleSheet.create({
     height: width * 0.88 * 0.6,
     borderRadius: 10,
   },
-  playIconContainer: {
-    position: 'absolute',
-    bottom: 0.05 * width,
-    right: 0.05 * width,
-    paddingVertical: 15,
-    paddingHorizontal: 16,
-    borderRadius: width,
-    // backgroundColor: 'rgb(245, 222, 25)',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowColor: '#66a6ff',
-    shadowOpacity: 0.8,
-    shadowRadius: 8,
-  },
-  playIcon: {
-    color: 'white',
-  }
 })

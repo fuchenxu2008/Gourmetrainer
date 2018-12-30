@@ -17,6 +17,7 @@ import LearnStepScreen from '../screens/LearnStepScreen';
 const DiscoverStack = createStackNavigator({
   Discover: RecipeDiscoverScreen,
   RecipeDetail: RecipeDetailScreen,
+  Welcome: WelcomeScreen,
   Search: SearchScreen,
   Ingredients: IngredientsScreen,
   LearnStep: LearnStepScreen,
@@ -43,6 +44,7 @@ const LearnStack = createStackNavigator({
   Learn: LearnScreen,
   TagCenter: TagCenter,
   RecipeDetail: RecipeDetailScreen,
+  Welcome: WelcomeScreen,
   Ingredients: IngredientsScreen,
   LearnStep: LearnStepScreen,
 });

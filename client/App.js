@@ -8,7 +8,7 @@ import { persistCache } from 'apollo-cache-persist';
 import DropdownAlert from 'react-native-dropdownalert';
 import { DropDownHolder } from './util/alert';
 import typeDefs from './clientState/typeDef';
-import { defaults, resolvers } from './clientState/resolvers';
+import { defaults } from './clientState/resolvers';
 import AppNavigator from './navigation/AppNavigator';
 
 const cache = new InMemoryCache();
@@ -19,12 +19,12 @@ persistCache({
 });
 
 const client = new ApolloClient({
-  // uri: 'http://10.9.26.203:3333/graphql',
-  uri: 'http://kyrie.top:3333/graphql',
+  uri: 'http://10.8.204.12:3333/graphql',
+  // uri: 'http://kyrie.top:3333/graphql',
   cache,
   clientState: {
     defaults,
-    resolvers,
+    // resolvers,
     // typeDefs,
   }
 });

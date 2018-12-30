@@ -7,21 +7,21 @@ const resolvers = {
             // category = category name String
             try{
                 const userLevel = await UserLevel.findOne({userid})
-                if(userLevel){
+                if(userLevel) {
                     let { levelSet } = userLevel;
                     levelSet = {
                         ...levelSet,
                         [category]: levelSet[category] ? levelSet[category] + 1 : 1 
                     }
-                    const newUserLevel = await UserLevel.findOneAndUpdate({userid},
-                        {
-                            levelSet
+                    const newUserLevel = await UserLevel.findOneAndUpdate({ userid }, { levelSet }, { new: true })
+                    return newUserLevel;
+                } else {
+                    return await UserLevel.create({
+                        userid,
+                        levelSet: {
+                            [category]: 1
                         },
-                        {
-                            new: true
-                        }
-                    )
-                    return newUserLevel
+                    })
                 }
             }catch(err){
                 return console.log("error found:", err)
