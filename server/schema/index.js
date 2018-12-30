@@ -1,9 +1,10 @@
 const { makeExecutableSchema } = require('apollo-server-express');
 
 const { CookedHistoryType, CookedHistoryQuery, CookedHistoryMutation } = require('./CookedHistory');
-const { LevelType, LevelQuery } = require('./Level');
+const { UserLevelType, UserLevelQuery, UserLevelMutation } = require('./UserLevel');
 const { RecipeType, RecipeQuery } = require('./Recipe');
 const { UserType, UserQuery, UserMutation } = require('./User');
+
 
 const Root = /* GraphQL */`
     type Query {
@@ -11,11 +12,10 @@ const Root = /* GraphQL */`
         getRecipe(_id: String!): Recipe
         getRecipes(title: String, tags: String, level: Int, limit: Int): [Recipe]
         getRandomRecipes(limit: Int): [Recipe]
-        getLevel(_id: String, recipe: String): Level
-        getLevels(level: Int!): [Level]
         getCookedHistory(_id: String!): CookedHistory
         getCookedHistories(user: String, recipe: String): [CookedHistory]
         loginUser(email:String!, password: String!): User
+        getUserLevel(userid:String!): UserLevel
     }
 
     type Mutation {
@@ -24,6 +24,7 @@ const Root = /* GraphQL */`
         createUser(params: UserInput!): User
         updateUser(_id: String!, params: UserInput!): User!
         deleteUser(_id: String!): User
+        updateUserLevel(category:String!, userid:String!): UserLevel
     }
 `;
 
@@ -32,7 +33,7 @@ const resolvers = [
      * Queries
      */
     CookedHistoryQuery,
-    LevelQuery,
+    UserLevelQuery,
     RecipeQuery,
     UserQuery,
     /**
@@ -40,9 +41,10 @@ const resolvers = [
      */
     CookedHistoryMutation,
     UserMutation,
+    UserLevelMutation
 ];
 
 module.exports = makeExecutableSchema({
-    typeDefs: [Root, CookedHistoryType, LevelType, RecipeType, UserType],
+    typeDefs: [Root, CookedHistoryType, UserLevelType, RecipeType, UserType],
     resolvers,
 })

@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const UserLevelSchema = ({
-    _id:String,
+    userid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     levelSet: Object
 });
 

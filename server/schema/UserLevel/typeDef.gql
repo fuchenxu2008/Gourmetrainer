@@ -1,0 +1,8 @@
+module.exports = `
+    scalar JSON
+    type UserLevel {
+        _id: String!  
+        levelSet: JSON
+        user: User!
+    }
+`;

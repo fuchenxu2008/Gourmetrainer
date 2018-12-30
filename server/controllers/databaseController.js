@@ -16,14 +16,14 @@ function NumAscSort(a,b)
     return a.steps.length - b.steps.length;
 }
 
-function aggregateRecipe(){
-    // select the tags with more than 20 dishes
-    Recipe.aggregate(
-        [
-            {$group : {_id:"$tags",count:{$sum:1}}},
-            // {$match : {count:{$gte:20}}},
-        ],(err,aggregation)=>{
-            console.log('aggregation: ', aggregation);
+// function aggregateRecipe(){
+//     // select the tags with more than 20 dishes
+//     Recipe.aggregate(
+//         [
+//             {$group : {_id:"$tags",count:{$sum:1}}},
+//             // {$match : {count:{$gte:20}}},
+//         ],(err,aggregation)=>{
+//             console.log('aggregation: ', aggregation);
             // aggregation.forEach(cata => {
             //     const tmp = cata.count
                 // console.log(element.count)
@@ -70,10 +70,10 @@ function aggregateRecipe(){
                 // }
                 // )
             // });
-            // return console.log(aggregation)
-        }
-    )
-}
+//             // return console.log(aggregation)
+//         }
+//     )
+// }
 
 // function test(){
 //     User.findByIdAndUpdate("5bffc62c2263a629b5ed1211",{level:1},{new: true},(err,doc)=>{
@@ -82,26 +82,27 @@ function aggregateRecipe(){
 //     })
 // }
 
-aggregateRecipe()
+// aggregateRecipe()
 // test()
 
 
-// UserLevel.create({_id:"5bfd072dccf0d260c89fd24f",levelSet:{}},(error,user)=>{
-//     if (error) console.error("error found in createing:",error.errmsg)
-//     return console.log("user added:",user._id)
-// })
 
 
 // UserLevel.findById({_id:"5bfd072dccf0d260c89fd24f"},(err,entry)=>{
 //     if(err) console.log("err found:",err.errmsg)
 //     const level = entry.levelSet
-//     UserLevel.findByIdAndUpdate({_id:"5bfd072dccf0d260c89fd24f"}, {levelSet:{
+//     UserLevel.findByIdAndUpdate({user_id:"5bfd072dccf0d260c89fd24f"}, {levelSet:{
 //         ...level,
 //         "粤菜":1
 //     }},{new: true},(err,doc)=>{
 //         if(err) console.log("err:",err)
 //         return console.log(doc)
 //     })
-
 // })
 
+
+
+UserLevel.create({userid:"5c167ae30ce91f82af346c9a",levelSet:{"粤菜":1}},(error,user)=>{
+    if (error) console.error("error found in createing:",error.errmsg)
+    return console.log("user added:",user.user)
+})

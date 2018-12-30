@@ -1,9 +1,9 @@
-const UserType = require('./typeDef.gql');
-const UserQuery = require('./query');
-const UserMutation = require('./mutation');
+const UserLevelType = require('./typeDef.gql');
+const UserLevelQuery = require('./query');
+const UserLevelMutation = require('./mutation');
 
 module.exports = {
-    UserType,
-    UserQuery,
-    UserMutation
+    UserLevelType,
+    UserLevelQuery,
+    UserLevelMutation
 }
