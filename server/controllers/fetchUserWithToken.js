@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const UserModel = require('../schema/User/model')
 
+// used for verifiction of user 
 module.exports = {
     fetchUser: async (token) =>{
         if(!token) return null

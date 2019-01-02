@@ -1,6 +1,7 @@
 const Recipe = require("../models/Recipe")
 
 module.exports = {
+    // method that can add the recipes crawled from external API and store them in the database
     addReceipe: (recipe, cata) => {
         Recipe.findById(recipe.id, (error, existingRecipe) => {
             if (error) return console.error("Error finding recipe:", error.errmsg)

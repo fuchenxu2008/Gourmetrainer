@@ -101,8 +101,8 @@ function NumAscSort(a,b)
 // })
 
 
-
-UserLevel.create({userid:"5c167ae30ce91f82af346c9a",levelSet:{"粤菜":1}},(error,user)=>{
-    if (error) console.error("error found in createing:",error.errmsg)
-    return console.log("user added:",user.user)
-})
+// test code
+// UserLevel.create({userid:"5c167ae30ce91f82af346c9a",levelSet:{"粤菜":1}},(error,user)=>{
+//     if (error) console.error("error found in createing:",error.errmsg)
+//     return console.log("user added:",user.user)
+// })

@@ -2,6 +2,7 @@ const CookedHistoryModel = require('./model');
 const UserModel = require('../User/model');
 const RecipeModel = require('../Recipe/model');
 
+//declare all data query function here
 const resolvers = {
     Query: {
         getCookedHistory: async (_, { _id }) => await CookedHistoryModel.findById(_id),

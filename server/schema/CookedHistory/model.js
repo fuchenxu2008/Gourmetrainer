@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+// declare the data schema for users cooking history  (using Mongoose populate)
 const CookedHistorySchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -18,4 +20,5 @@ const CookedHistorySchema = mongoose.Schema({
 
 const CookedHistory = mongoose.model("CookedHistory", CookedHistorySchema);
 
+// export schema as "CookedHistory" 
 module.exports = CookedHistory;

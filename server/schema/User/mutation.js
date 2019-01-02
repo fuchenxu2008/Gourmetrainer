@@ -2,7 +2,7 @@ const UserModel = require('./model');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
-
+//declare all data mutation function here
 const resolvers = {
     Mutation: {
         createUser: async (_, { params }) => {
@@ -11,7 +11,7 @@ const resolvers = {
                 ...params,
                 password: await bcrypt.hash(params.password,10)
             });
-            // token
+            // token 
             const token = jwt.sign({ id: user._id, email: user.email }, "a million dollars", {
                 expiresIn: 86400 // expires in 24 hours
             });

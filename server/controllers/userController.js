@@ -1,6 +1,7 @@
 // const User = require("../models")
 //Create
 module.exports = {
+    // register user
     addUser: (req, res) => {
         const {
             email,
@@ -27,7 +28,7 @@ module.exports = {
         })
     },
 
-    //Read
+    //Read user information by user id 
     getUser: (id) => {
         console.log(id);
         return User.findById(id)
@@ -40,7 +41,7 @@ module.exports = {
         // })
     },
 
-    //Updata
+    //Updata information
     editUser: (req, res) => {
         const {
             email,
@@ -67,7 +68,7 @@ module.exports = {
         })
     },
 
-    //Delete
+    //Delete a specific user
     deleteUser: (req, res) => {
         const {
             id

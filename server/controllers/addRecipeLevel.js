@@ -1,6 +1,7 @@
 const Recipe = require("../schema/Recipe/model")
 
 module.exports = {
+    // get the length of a specific recipe (by recipe id)
     getReceipeLength: (_id ) => {
         Recipe.findById(_id, (error, existingRecipe) => {
             if (error) return console.error("Error finding recipe:", error.errmsg)
@@ -8,6 +9,7 @@ module.exports = {
         })
     },
 
+    // get the recipe with minimum and maximum length of steps in one category
     getMinMax:()=>{
         let min = Infinity
         let minID = ""

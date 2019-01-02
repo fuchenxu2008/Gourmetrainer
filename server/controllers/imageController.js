@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+//used to get the avater image
 module.exports = {
     getAvatar: (req, res) => {
         res.sendFile(path.join(global.__root, `storage/avatar/${req.params.id}`), err => {

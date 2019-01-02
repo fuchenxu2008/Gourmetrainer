@@ -1,6 +1,6 @@
 const UserLevel= require('./model');
 
-
+//declare all data mutation function here
 const resolvers = {
     Mutation: {
         updateUserLevel: async (_, { category, userid }) => {
@@ -11,6 +11,7 @@ const resolvers = {
                     let { levelSet } = userLevel;
                     levelSet = {
                         ...levelSet,
+                        // if level set already exist, add the level by 1, or set it to 1
                         [category]: levelSet[category] ? levelSet[category] + 1 : 1 
                     }
                     const newUserLevel = await UserLevel.findOneAndUpdate({ userid }, { levelSet }, { new: true })

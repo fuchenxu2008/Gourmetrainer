@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const random = require('mongoose-simple-random');
 
+
+// declare the data schema for recipe
 const RecipeSchema = mongoose.Schema({
     _id: String,
     title: String,
