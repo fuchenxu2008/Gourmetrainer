@@ -19,18 +19,20 @@ export default class RecipeSearchResult extends Component {
 
     return (
         <ScrollView style={styles.searchContainer}>
-            <Query query={SEARCH_RECIPES} variables={{ title, tags, limit }} fetchPolicy='cache-and-network'>
-                {({ loading, error, data }) => {
-                    if (loading) return <Loading />;
-                    if (error) return <Text>{`Error!: ${error}`}</Text>;
+            <View style={{ minHeight: 1 / 2 * height }}>
+                <Query query={SEARCH_RECIPES} variables={{ title, tags, limit }} fetchPolicy='cache-and-network'>
+                    {({ loading, error, data }) => {
+                        if (loading) return <Loading />;
+                        if (error) return <Text>{`Error!: ${error}`}</Text>;
 
-                    return (
-                        data.getRecipes.map(recipe => (
-                            <RecipeCard recipe={recipe} key={recipe._id} />
-                        ))
-                    )
-                }}
-            </Query>
+                        return (
+                            data.getRecipes.map(recipe => (
+                                <RecipeCard recipe={recipe} key={recipe._id} />
+                            ))
+                        )
+                    }}
+                </Query>
+            </View>
         </ScrollView>
     )
   }
