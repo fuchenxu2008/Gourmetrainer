@@ -7,6 +7,7 @@ import layout from '../constants/Layout';
 const { height } = layout.window;
 
 export default class IngredientsScreen extends Component {
+    /** Do not display the header */
     static navigationOptions = {
         header: null,
     };
@@ -17,10 +18,11 @@ export default class IngredientsScreen extends Component {
 
     ingredients = []
 
+    /** React lifecycle method: just before a component renders */
     componentWillMount() {
-        const { recipe } = this.props.navigation.state.params;
+        const { recipe } = this.props.navigation.state.params; // Get recipe object passed from route
         const { burden, ingredients } = recipe;
-        this.ingredients = (`${burden};${ingredients}`).split(';');
+        this.ingredients = (`${burden};${ingredients}`).split(';'); // Convert the ingredient string to array
     }
 
     _handleCheckAll = () => {
@@ -28,13 +30,16 @@ export default class IngredientsScreen extends Component {
         this.ingredients.forEach((ing, i) => {
             checklistStatus[i] = true
         })
+        // Each time `setState` is called, the component rerenders.
         this.setState({ checklistStatus })
     }
 
     _handleBeginCooking = (recipe) => {
         const { checklistStatus } = this.state;
+        // Sum all checked items
         const checkedLength = Object.keys(checklistStatus).map(k => checklistStatus[k]).filter(checkStatus => checkStatus).reduce((x, y) => x + y, 0)
         const totalLength = this.ingredients.length;
+        // Navigate to learn screen only if all ingredients are all checked
         checkedLength === totalLength
         ?   this.props.navigation.navigate('LearnStep', { recipe })
         :   DropDownHolder.alert('info', 'Hey', 'Are you done gathering these stuff?');
@@ -51,10 +56,13 @@ export default class IngredientsScreen extends Component {
                     <Text style={styles.contentText}>{ item.split(',')[1] }</Text>
                 <CheckBox
                     checked={checklistStatus[k] || false}
-                    onPress={() => this.setState({checklistStatus: {
-                        ...checklistStatus,
-                        [k]: checklistStatus[k] ? false : true 
-                    }})}
+                    onPress={() => this.setState({
+                        // Flip the status of current checkbox
+                        checklistStatus: {
+                            ...checklistStatus,
+                            [k]: checklistStatus[k] ? false : true 
+                        }
+                    })}
                     containerStyle={{ padding: 0, margin: 0 }}
                 />
             </View>

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, ScrollView, Image, Animated } from 'react-native';
 import { LinearGradient } from 'expo';
 import CookedHistory from '../containers/CookedHistory';
-import avatar from '../assets/images/default_male.png';
+import maleAvatar from '../assets/images/default_male.png';
+import femaleAvatar from '../assets/images/default_female.png';
 
 const HEADER_MAX_HEIGHT = 140;
 const HEADER_MIN_HEIGHT = 90;
@@ -16,9 +17,9 @@ export default class UserProfile extends Component {
 
     render() {
         const { user } = this.props;
-        if (!user) return null;
         const { email, _id, gender, nickname } = user;
 
+        // Use React-Native Animated features to bind user scrolling to dynamic values
         const headerHeight = this.state.scrollY.interpolate({
             inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
             outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
@@ -93,7 +94,7 @@ export default class UserProfile extends Component {
                         width: profileImageHeight,
                         marginTop: profileImageMarginTop,
                     }}>
-                        <Image source={avatar} style={styles.profileAvatar} />
+                        <Image source={gender === 'Male' ? maleAvatar : femaleAvatar} style={styles.profileAvatar} />
                     </Animated.View>
                     <Text style={styles.profileNickname}>Welcome <Text style={styles.nickname}>{nickname}</Text></Text>
                     <CookedHistory user={user} />

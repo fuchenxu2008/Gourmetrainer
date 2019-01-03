@@ -5,15 +5,15 @@ const { width } = layout.window;
 
 export default class LevelCard extends Component {
   render() {
-        const { recipe, level, onPressImage, onPressDetail } = this.props;
+        const { recipe, level, onPress } = this.props;
         const { _id, title, albums } = recipe;
         return (
             <View style={styles.outestContainer}>
-                <TouchableOpacity style={styles.albumImgBox} onPress={() => onPressImage(_id)}>
+                <TouchableOpacity style={styles.albumImgBox} onPress={() => onPress(_id)}>
                     <Image source={{ uri: albums[0] }} style={styles.albumImg}/>
                 </TouchableOpacity>
                 <View style={styles.rightSection}>
-                    <TouchableOpacity style={styles.detailSection} onPress={() => onPressDetail(_id)}>
+                    <TouchableOpacity style={styles.detailSection} onPress={() => onPress(_id)}>
                         <Text style={styles.recipeTitle}>{title}</Text>
                         <Text style={styles.smallerText}>Difficulty</Text>
                         <Text style={styles.difficulty}>{new Array(level || 1).fill('🍖').join('')}</Text>

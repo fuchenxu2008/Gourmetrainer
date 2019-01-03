@@ -31,6 +31,7 @@ export default class SearchScreen extends Component {
                         />
                     </View>
                     {
+                        // If user has typed in searchbar, show result else show all cuisines
                         search_term
                         ? <RecipeSearchResult term={search_term} limit={15} />
                         : (

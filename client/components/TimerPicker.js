@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     pickerGroup: {
         flexDirection: 'row',
-        height: 0,
+        flex: 1,
     },
     timerPicker: {
         width: width * 1 / 3,

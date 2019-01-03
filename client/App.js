@@ -1,40 +1,51 @@
-import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text, AsyncStorage } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import React from 'react';  // React Core
+import { Platform, StatusBar, StyleSheet, View, Text, AsyncStorage } from 'react-native'; // React-Native Components
+import { AppLoading, Asset, Font, Icon } from 'expo'; // Additional component provided by ExpoKit
+/** Apollo Client Pieces */
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { persistCache } from 'apollo-cache-persist';
+/** Global notification dropdown setup */
 import DropdownAlert from 'react-native-dropdownalert';
 import { DropDownHolder } from './util/alert';
-import typeDefs from './clientState/typeDef';
-import { defaults } from './clientState/resolvers';
+/** Routing navigation component */
 import AppNavigator from './navigation/AppNavigator';
 
+/** Create in-memory cache to store application state */
 const cache = new InMemoryCache();
-
+/** Persist the in-memory state to local storage (local `database`) */ 
 persistCache({
   cache,
   storage: AsyncStorage,
 });
 
+/**
+ * Create and Configure the Apollo client for communicating with backend Apollo server through GraphQL
+ */
 const client = new ApolloClient({
-  uri: 'http://10.8.204.12:3333/graphql',
-  // uri: 'http://kyrie.top:3333/graphql',
+  // uri: 'http://10.9.26.203:3333/graphql',
+  uri: 'http://kyrie.top:3333/graphql',
   cache,
   clientState: {
-    defaults,
-    // resolvers,
-    // typeDefs,
+    defaults: {
+      currentUser: null,
+    },
   }
 });
 
+/**
+ * Application Entry Point - Root Component
+ */
 export default class App extends React.Component {
+  /** Component state */
   state = {
     isLoadingComplete: false,
   };
 
+  /** Using JSX (HTML-like) syntax for declarative UI */
   render() {
+    // If loading in progress
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -56,6 +67,7 @@ export default class App extends React.Component {
     }
   }
 
+  /** Load important assets asynchronously in advance for better experience */
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
@@ -63,6 +75,7 @@ export default class App extends React.Component {
         require('./assets/images/foodbg.jpg'),
         require('./assets/images/default_male.png'),
         require('./assets/images/default_female.png'),
+        require('./assets/images/icon.png'),
         /**
          * Cuisines
          */
@@ -90,24 +103,24 @@ export default class App extends React.Component {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        // 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
     ]);
   };
 
   _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
     console.warn(error);
   };
 
+  /** ES6 Arrow functions for binding `this` keyword automatically */
   _handleFinishLoading = () => {
+    // So that `this` here would be referring to the component class instead of `undefined`
     this.setState({ isLoadingComplete: true });
   };
 }
 
+/**
+ * StyleSheet to style the component, using CSS-in-JS
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

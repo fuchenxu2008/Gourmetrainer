@@ -12,10 +12,7 @@ export default class RecipeDiscoverScreen extends Component {
     header: null,
   };
 
-  componentDidMount() {
-    // this.props.navigation.navigate('Search')
-  }
-
+  // Go to search screen on tapping searchbar
   _handleBeginSearch = () => {
     this.props.navigation.navigate('Search')
   }

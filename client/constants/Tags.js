@@ -1,3 +1,4 @@
+// Predefined all displayed cuisines
 export default [
     '川菜',
     '鲁菜',

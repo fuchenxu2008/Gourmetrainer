@@ -1,5 +1,12 @@
 import gql from 'graphql-tag';
 
+/**
+ * All used GraphQL API usage
+ * 
+ * Specify what is needed and exactly those will be returned
+ */
+
+// Register
 export const CREATE_USER = gql`
   mutation createUser($params: UserInput!) {
     createUser(params: $params) {
@@ -15,6 +22,7 @@ export const CREATE_USER = gql`
   }
 `;
 
+// Get current user (local global state query)
 export const GET_CURRENT_USER = gql`
   {
     currentUser @client {
@@ -30,6 +38,7 @@ export const GET_CURRENT_USER = gql`
   }
 `;
 
+// Login
 export const LOGIN_USER = gql`
   query loginUser($email: String!, $password: String!) {
     loginUser(email: $email, password: $password) {
@@ -45,6 +54,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
+// Get one single recipe
 export const GET_RECIPE = gql`
   query getRecipe($_id: String!) {
     getRecipe(_id: $_id) {
@@ -64,6 +74,7 @@ export const GET_RECIPE = gql`
   }
 `;
 
+// Get featured recipes
 export const GET_FEATURED = gql`
     query FeaturedRecipes($limit: Int) {
         getRandomRecipes(limit: $limit) {
@@ -75,6 +86,7 @@ export const GET_FEATURED = gql`
     }
 `;
 
+// Search recipes by different terms
 export const SEARCH_RECIPES = gql`
     query SearchRecipes($title: String, $tags: String, $limit: Int) {
         getRecipes(title: $title, tags: $tags, limit: $limit) {
@@ -86,6 +98,7 @@ export const SEARCH_RECIPES = gql`
     }
 `;
 
+// Get recipes by tags and level (same API as previous)
 export const GET_RECIPES_BY_LEVEL = gql`
     query GetRecipesByLevel($tags: String!, $level: Int!) {
       getRecipes(tags: $tags, level: $level) {
@@ -96,6 +109,7 @@ export const GET_RECIPES_BY_LEVEL = gql`
     }
 `;
 
+// Add one cook history
 export const ADD_COOK_HISTORY = gql`
   mutation AddCookedHistory($user: String!, $recipe: String!) {
     addCookedHistory(user: $user, recipe: $recipe) {
@@ -104,6 +118,7 @@ export const ADD_COOK_HISTORY = gql`
   }
 `;
 
+// Get all cook histories of a given user
 export const GET_COOK_HISTORIES = gql`
   query GetUserCookedHistory($user: String!) {
     getCookedHistories(user: $user) {
@@ -118,14 +133,15 @@ export const GET_COOK_HISTORIES = gql`
   }
 `;
 
-export const GET_USER_LEVEL = gql`
-  query GetUserLevel($user: String!) {
-    getUserLevel(userid: $user) {
-      levelSet
-    }
-  }
-`
-
+// // Get User levels of different cuisines
+// export const GET_USER_LEVEL = gql`
+//   query GetUserLevel($user: String!) {
+//     getUserLevel(userid: $user) {
+//       levelSet
+//     }
+//   }
+// `
+// Update & unlock advanced levels
 export const UPDATE_USER_LEVEL = gql`
   mutation updateUserLevel($user: String!, $category: String!) {
     updateUserLevel(userid: $user, category: $category) {

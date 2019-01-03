@@ -18,6 +18,7 @@ export class RecipeDetail extends Component {
 
   _handleEnterLearningMode = (recipe) => {
     try {
+      // Prevent unlogged user from entering learning screen
       this.props.data.currentUser
         ? this.props.navigation.navigate('Ingredients', { recipe })
         : this.props.navigation.navigate('Welcome')
@@ -26,14 +27,10 @@ export class RecipeDetail extends Component {
     }
   }
 
-  _handleCompleteFetch = ({ getRecipe }) => {
-    const { autoCook } = this.props.navigation.state.params;
-    if (autoCook) this._handleEnterLearningMode(getRecipe);
-  }
-
   render() {
     const { _id } = this.props.navigation.state.params;
 
+    // animation of recipe image (size) when user scrolls up and down
     const albumHeight = this.state.scrollY.interpolate({
       inputRange: [height * (-1), 0],
       outputRange: [height * 1.3, height * 0.35],
@@ -41,7 +38,7 @@ export class RecipeDetail extends Component {
 
     return (
       <View style={styles.viewContainer}>
-        <Query query={GET_RECIPE} variables={{ _id }} onCompleted={this._handleCompleteFetch}>
+        <Query query={GET_RECIPE} variables={{ _id }}>
           {({ loading, error, data }) => {
             if (loading) return <Text>Loading...</Text>;
             if (error) return <Text>{`Error!: ${error}`}</Text>;
@@ -73,7 +70,7 @@ export class RecipeDetail extends Component {
                   <Text style={styles.contentText}>{intro}</Text>
                   <Text style={styles.heading}>Ingredients</Text>
 
-                  {
+                  { // Ingredients
                     (`${ingredients};${burden}`).split(';').map((item, k) => (
                       <View key={`ingredient-${k}`} style={styles.ingredientContainer}>
                         <Text style={styles.contentText}>{ item.split(',')[0] }</Text>
@@ -83,7 +80,7 @@ export class RecipeDetail extends Component {
                   }
 
                   <Text style={styles.heading}>Steps</Text>
-                    {
+                    { // Steps
                       steps.map((step, i) => (
                         <View key={i} style={styles.stepContainer}>
                           <Text style={{ ...styles.contentText, ...styles.stepText}}>{step.step}</Text>

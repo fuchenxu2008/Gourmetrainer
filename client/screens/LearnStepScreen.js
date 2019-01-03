@@ -17,6 +17,7 @@ export class LearnStepScreen extends Component {
   state = {
     currentStep: 1,
     processing: false,
+    // Store timer value
     timer: {
       hours: 0,
       minutes: 0,
@@ -86,7 +87,7 @@ export class LearnStepScreen extends Component {
     const { currentUser } = this.props.data;
     this.setState({ processing: true })
     try {
-      // Add cook history
+      // Add cook history and refetch to update
       const addHistoryRes = await client.mutate({
         mutation: ADD_COOK_HISTORY,
         variables: { user: currentUser._id, recipe: recipeId },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { graphql } from 'react-apollo';
-import { GET_CURRENT_USER, GET_USER_LEVEL } from '../constants/GraphAPI';
+import { GET_CURRENT_USER } from '../constants/GraphAPI';
 import TagCard from '../components/TagCard';
 import allTags from '../constants/Tags';
 import layout from '../constants/Layout';
@@ -14,6 +14,7 @@ export class LearnScreen extends React.Component {
 
   _handlePress = (tag) => {
     try {
+      // Prevent unlogged user entering learning screen
       const user = this.props.data.currentUser;
       user
         ? this.props.navigation.navigate('TagCenter', { tag, user })

@@ -10,6 +10,7 @@ export default class WelcomeScreen extends Component {
         header: null,
     };
 
+    // Set two status 'Register' and 'Login' for resuing one component
     state = {
         status: null,
     }
@@ -29,6 +30,7 @@ export default class WelcomeScreen extends Component {
     }
     
     _handleLoggedIn = () => {
+        // Go back to the foremost page
         this.props.navigation.popToTop();
     }
 
@@ -47,7 +49,8 @@ export default class WelcomeScreen extends Component {
                     <Entypo name='chevron-thin-left' size={25} color='white'/>
                 </TouchableOpacity>
                 
-                {!status &&
+                {   // If user hasn't click 'register' or 'login'
+                    !status &&
                     <View style={styles.welcomeSection}>
                         <Text style={styles.appHeading}>Gourmetrainer</Text>
                         <Button onPress={this._handleLogin} theme='hollow' icon='rocket1'>Login with Email</Button>
@@ -55,7 +58,7 @@ export default class WelcomeScreen extends Component {
                         <Button onPress={this._handleRegister} theme='default' icon='adduser'>Create account</Button>
                     </View>
                 }
-                {
+                {   // If user has chosen one, show that form
                     status &&
                     <View style={styles.authContainer}>
                         <AuthForm type={status} handleBack={this._handleBack} onLoggedIn={this._handleLoggedIn} />
@@ -71,7 +74,6 @@ const styles = StyleSheet.create({
         flex: 1,    //!!!
         flexDirection: 'row',
         justifyContent: 'center',
-        // alignItems: 'center',
     },
     backgroundContainer: {
         overflow: 'hidden',
@@ -115,6 +117,5 @@ const styles = StyleSheet.create({
     authContainer: {
         alignSelf: 'center',
         width: '85%',
-        // paddingTop: '20%',
     }
 });

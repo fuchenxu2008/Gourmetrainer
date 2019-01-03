@@ -10,7 +10,6 @@ export default class CookedHistory extends Component {
         const { user } = this.props;
 
         return (
-        <View>
             <Query query={GET_COOK_HISTORIES} variables={{ user: user._id }} fetchPolicy='cache-and-network'>
                 {({ loading, error, data }) => {
                     if (loading) return <Text>Loading...</Text>;
@@ -26,7 +25,6 @@ export default class CookedHistory extends Component {
                     );    
                 }}
             </Query>
-        </View>
         )
     }
 }

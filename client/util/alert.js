@@ -1,3 +1,4 @@
+/** Util class for displaying global dropdown notification */
 export class DropDownHolder {
     static dropDown;
 

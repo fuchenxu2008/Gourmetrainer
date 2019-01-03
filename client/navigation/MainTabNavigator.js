@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import colors from '../constants/Colors';
-
+/** Importing all screen components */
 import TabBarIcon from '../components/TabBarIcon';
 import RecipeDiscoverScreen from '../screens/RecipeDiscoverScreen';
 import LearnScreen from '../screens/LearnScreen';
@@ -14,6 +14,7 @@ import TagCenter from '../screens/TagCenter';
 import IngredientsScreen from '../screens/IngredientsScreen';
 import LearnStepScreen from '../screens/LearnStepScreen';
 
+/** Create stack of available screens in the first tab, so user can navigate back and forth among these screens */
 const DiscoverStack = createStackNavigator({
   Discover: RecipeDiscoverScreen,
   RecipeDetail: RecipeDetailScreen,
@@ -23,8 +24,10 @@ const DiscoverStack = createStackNavigator({
   LearnStep: LearnStepScreen,
 })
 
+/** Configure the stack, like icon */
 DiscoverStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
+  // Hide the tabbar when not on the top level screens
   if (navigation.state.index > 0) {
     tabBarVisible = false;
   }
@@ -92,6 +95,7 @@ SettingsStack.navigationOptions = ({ navigation }) => {
   });
 };
 
+/** Export the created tabbar using stacks defined and set styles */
 export default createBottomTabNavigator({
   DiscoverStack,
   LearnStack,
