@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const { ApolloServer } = require('apollo-server-express');
 const { port, mongoUrl } = require('./config');
-const {fetchUser} = require('./controllers/fetchUserWithToken')
+const { fetchUser } = require('./controllers/fetchUserWithToken')
 // const {getReceipeLength,getMinMax,aggregateRecipe} = require("./controllers/addRecipeLevel")
 
 // GraphQL Schema
@@ -34,7 +34,7 @@ global.__root = __dirname;
 app.use(debugskr("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-setRouter(app);
+// setRouter(app);
 
 const server = new ApolloServer({ schema, context:({ req }) => {
         // get the user token from the headers
@@ -57,5 +57,3 @@ server.applyMiddleware({ app });
 app.listen(port, () => {
     console.log(`√ Server started at http://localhost:${port}`);
 });
-
-// aggregateRecipe()

@@ -19,6 +19,7 @@ export default class TimerPicker extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        // Compare previous and current props to determine whether to show time picker modal
         const toBeVisible = nextProps.visible;
         const isVisible = this.props.visible;
         const { y } = this.state;

@@ -1,58 +1,39 @@
-# Problem Encountered
+# Gourmetrainer
 
-## GraphQL folder structure
+## Prerequisite
 
-There is **no** best structure, but to make it scalable, either group by `resolvers`, `typeDef`, `Queries`, `Mutations` (later `Subscriptions`) or by different `models`.
+* Node.js version 9.10.0
+* NPM (installed with Node.js)
+* Default server port `3333` free, can be changed in `/server/config/index.js`
 
-[![Example Structures](https://ws4.sinaimg.cn/large/006tNbRwgy1fxn3ccb9z0j312w0twaen.jpg)](https://spectrum.chat/graphql/general/recommendations-for-scale-able-graphql-folder-structure-nodejs~c3936202-f2df-47cc-af96-1d829d34f1d3)
+## How to set up development environment
 
-## Relational Model
+1. Run `git clone git@github.com:fuchenxu2008/Gourmetrainer.git` in `Terminal`. And run `cd Gourmetrainer` to enter project folder.
+2. From project folder run `cd server/` and then `npm install` to install dependencies.
+3. After dependencies having been installed, run `npm start` to start **server** program. Since the server program is a dameon process, following actions need a new tab of `Terminal`.
+4. From project folder run `cd client/` and then `npm install` to install dependencies.
+5. After dependencies having been installed, run `npm start` to start **client** program. Note that the client program is still a dameon process.
+6. Before testing it with real device or simulator, please edit `/client/App.js` and change `${your_IP_address}` to your machine's IP address. (If using simulator only, `localhost` is also fine)
 
-Do not have to use Mongoose `populate` for relational subdocument, can just search in that collection.
+   ```javascript
+   const client = new ApolloClient({
+        uri: 'http://${your_IP_adress}:3333/graphql',
+        cache,
+        clientState: {
+            defaults: {
+            currentUser: null,
+            },
+        }
+    });
+   ```
 
-## ID Typing
+7. Then you can either type `a` in the `client terminal` to start Android Simulator or use `Expo App` on your phone to scan the QR Code to test (Needs to be in the same LAN Network).
 
-Defining `_id` as `String` explicitly can seem easy, but it requires `default` value field manually set in Mongoose Schema.
+## Build standalone APK for Android
 
-> Searching by `ObjectId` can be achieved by providing `String`
+1. `cd client/` and Run `expo build:android` to publish the working project to Expo server to build.
+2. After the build process is finished, download the APK file from website given in terminal.
 
-## Handling ObjectId in GraphQL
+## Publish change
 
-To circumvent the error `ID cannot represent value: { _bsontype: \"ObjectID\"}` caused by having to define `_id` field as `ID` or `String` where it should be `ObjectId` in MongoDB, just define it as `String`, and add the following snippet to `app.js` to **override** the default behavior of Mongoose.
-
-``` Javascript
-const { ObjectId } = mongoose.Types;
-ObjectId.prototype.valueOf = function () {
-  return this.toString();
-};
-```
-
-## Resolver Coding
-
-When coding the **top-level** Query resolvers, which is **Root Resolvers**, the ***first*** argument should be `undefined`. Can note it as `_` or `root` (whatever).
-
-``` Javascript
-Query: {
-    getLevel: async (_, param) => await LevelModel.findOne(param)
-},
-```
-
-And when querying **subdocuments**, which is nested query, the ***first*** argument will be result obtained from **parent** query.
-
-``` Javascript
-Level: {
-    recipe: async (level) => await RecipeModel.findById(level.recipe)
-}
-```
-
-## Wiring Up
-
-`makeExecutableSchema` can combine arrays of `typeDefs` and `resolvers` to create a schema, which can be later used in `ApolloServer` creation.
-
-``` Javascript
-const schema = makeExecutableSchema({
-    typeDefs: [Root, LevelType],
-    resolvers: [resolvers, LevelResolvers],
-})
-const server = new ApolloServer({ schema });
-```
+Expo allows **OTA Update**, no need to rebuild for changes to take effect, just run `expo publish` from `client/` directory. After it's done, the next launch of the application will download the update **in the background** (might take a while), and will kick in the next time the application launches.

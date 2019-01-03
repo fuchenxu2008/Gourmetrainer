@@ -4,6 +4,7 @@ import { Query } from 'react-apollo';
 import RecipeCard from "../components/RecipeCard";
 import { SEARCH_RECIPES } from '../constants/GraphAPI';
 import layout from '../constants/Layout';
+import Loading from '../components/Loading';
 const { height } = layout.window;
 
 export default class RecipeSearchResult extends Component {
@@ -20,7 +21,7 @@ export default class RecipeSearchResult extends Component {
         <ScrollView style={styles.searchContainer}>
             <Query query={SEARCH_RECIPES} variables={{ title, tags, limit }} fetchPolicy='cache-and-network'>
                 {({ loading, error, data }) => {
-                    if (loading) return <Text>Loading...</Text>;
+                    if (loading) return <Loading />;
                     if (error) return <Text>{`Error!: ${error}`}</Text>;
 
                     return (

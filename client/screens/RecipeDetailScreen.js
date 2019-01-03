@@ -4,6 +4,7 @@ import { Query, graphql } from 'react-apollo';
 import { GET_RECIPE, GET_CURRENT_USER } from '../constants/GraphAPI';
 import layout from '../constants/Layout';
 import PlayButton from '../components/PlayButton';
+import Loading from '../components/Loading';
 
 const { height, width } = layout.window;
 
@@ -40,7 +41,7 @@ export class RecipeDetail extends Component {
       <View style={styles.viewContainer}>
         <Query query={GET_RECIPE} variables={{ _id }}>
           {({ loading, error, data }) => {
-            if (loading) return <Text>Loading...</Text>;
+            if (loading) return <Loading />;
             if (error) return <Text>{`Error!: ${error}`}</Text>;
             {/** Detail Page */}
             const { title, albums, intro, tags, ingredients, burden, steps } = data.getRecipe;

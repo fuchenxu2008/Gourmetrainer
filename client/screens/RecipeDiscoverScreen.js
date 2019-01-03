@@ -50,6 +50,5 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     paddingLeft: '6%',
     paddingRight: '6%',
-    // fontFamily: 'Iowan Old Style'
   }
 });

@@ -5,8 +5,8 @@ import { Query } from 'react-apollo';
 import LevelCard from '../components/LevelCard';
 import { GET_RECIPES_BY_LEVEL } from '../constants/GraphAPI';
 import layout from '../constants/Layout';
+import Loading from '../components/Loading';
 const { width } = layout.window;
-
 
 export default class LevelSection extends Component {
   render() {
@@ -14,7 +14,7 @@ export default class LevelSection extends Component {
     return (
         <Query query={GET_RECIPES_BY_LEVEL} variables={{ tags, level }}>
             {({ data, loading, error }) => {
-                if (loading) return <Text>Loading...</Text>;
+                if (loading) return <Loading />;
                 if (error) return <Text>{`Error!: ${error}`}</Text>;
 
                 return (

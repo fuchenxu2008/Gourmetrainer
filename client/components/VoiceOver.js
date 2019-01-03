@@ -4,9 +4,10 @@ import { Speech } from 'expo';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default class VoiceOver extends Component {
+  /** Speak text using system built-in voice package */
   _speakText = (text) => {
     Speech.speak(text, {
-      language: 'zh-Hans'
+      language: 'zh-Hans' // Chinese language
     })
   }
 
