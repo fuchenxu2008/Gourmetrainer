@@ -1,5 +1,27 @@
 # Gourmetrainer
 
+## Functionalities
+
+1. Login and Register
+
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fytw44vmlsj319l0u0kjp.jpg)
+
+2. View recipes
+
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fytw4ta6zaj319l0u0hdw.jpg)
+
+3. Interactive Learning
+
+![](https://ws2.sinaimg.cn/large/006tNc79gy1fytw54v469j319l0u07wn.jpg)
+
+4. Level based advancing
+
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fytw5b3ht4j319l0u07wm.jpg)
+
+5. Search recipes by cuisines and name
+
+![](https://ws3.sinaimg.cn/large/006tNc79gy1fytw5rgilkj319l0u0e85.jpg)
+
 ## Prerequisite
 
 * Node.js version 9.10.0
