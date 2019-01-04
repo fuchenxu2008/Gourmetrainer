@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 13 / 25 * width,
     height: 9 / 25 * width,
-    marginBottom: 18,
+    marginBottom: 15,
   },
   recipeTitle: {
     // marginLeft: 20,

@@ -10,7 +10,7 @@ export default class Banner extends Component {
       <View style={styles.bannerContainer}>
         <Image source={bannerImg} style={styles.bannerImg} />
         <View>
-            <Text style={styles.titleText}>Get Cooking from Zero to Master</Text>
+            <Text style={styles.titleText}>Learn Cooking from Zero to Master</Text>
             <Text style={styles.smallText}>Game Your Cooking Journey</Text>        
         </View>
       </View>

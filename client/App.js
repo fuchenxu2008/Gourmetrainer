@@ -1,6 +1,6 @@
 import React from 'react';  // React Core
 import { Platform, StatusBar, StyleSheet, View, Text, AsyncStorage } from 'react-native'; // React-Native Components
-import { AppLoading, Asset, Font, Icon } from 'expo'; // Additional component provided by ExpoKit
+import { AppLoading, Asset, Font, Icon, Updates } from 'expo'; // Additional component provided by ExpoKit
 /** Apollo Client Pieces */
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
@@ -9,6 +9,7 @@ import { persistCache } from 'apollo-cache-persist';
 /** Global notification dropdown setup */
 import DropdownAlert from 'react-native-dropdownalert';
 import { DropDownHolder } from './util/alert';
+import { sleep } from './util/sleep';
 /** Routing navigation component */
 import AppNavigator from './navigation/AppNavigator';
 
@@ -24,7 +25,6 @@ persistCache({
  * Create and Configure the Apollo client for communicating with backend Apollo server through GraphQL
  */
 const client = new ApolloClient({
-  // uri: 'http://10.9.26.203:3333/graphql',
   uri: 'http://kyrie.top:3333/graphql',
   cache,
   clientState: {
@@ -42,6 +42,20 @@ export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
+
+  /** Check for updates to refresh immediately */
+  componentDidMount() {
+    Updates.addListener(async (event) => {
+      if (event.type === Updates.EventType.DOWNLOAD_STARTED) {
+        DropDownHolder.alert('info', 'Hey', 'New update is availble and downloading!');
+      }
+      if (event.type === Updates.EventType.DOWNLOAD_FINISHED) {
+        DropDownHolder.alert('success', 'Success', 'Updating new version...');
+        await sleep(3000);
+        Updates.reload();
+      }
+    })
+  }
 
   /** Using JSX (HTML-like) syntax for declarative UI */
   render() {
