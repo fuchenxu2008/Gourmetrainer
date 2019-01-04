@@ -1,5 +1,7 @@
 # Gourmetrainer
 
+> Github Link: [https://github.com/fuchenxu2008/Gourmetrainer](https://github.com/fuchenxu2008/Gourmetrainer)
+
 ## Functionalities
 
 1. Login and Register

@@ -2,26 +2,28 @@
 
 ## Known Issues
 
-1. The application build is around 22Mb, because some modules from 'ExpoKit' is used like Voice function, Icon and Gradient background. Besides, Expo aims to provide support for multiple SDK and OTA update which can allow clients to recieve latest update without reinstalling apk. These factors give rise to the oversize of build bundle.
-2. In cuisine learning page with multiple levels, the first time rendering may cause some layout error, multiple views stacking up on each other. Swiping back and re-enter the screen solve the issue. After lots of digging, it still cannot be addressed.
+> 1. The application build is around 22Mb, because some modules from '**ExpoKit**' is used like Voice function, Icon and Gradient background. Besides, Expo aims to provide support for multiple SDK and OTA update which can allow clients to recieve latest update without reinstalling apk. These factors give rise to the oversize of build bundle.
+> 2. In cuisine learning page with multiple levels, the first time rendering may cause some layout error, multiple views stacking up on each other. Swiping back and re-enter the screen solve the issue. After lots of digging, it still cannot be addressed.
 
-## GraphQL folder structure
+## Lessons Learned
+
+###GraphQL folder structure
 
 There is **no** best structure, but to make it scalable, either group by `resolvers`, `typeDef`, `Queries`, `Mutations` (later `Subscriptions`) or by different `models`.
 
 [![Example Structures](https://ws4.sinaimg.cn/large/006tNbRwgy1fxn3ccb9z0j312w0twaen.jpg)](https://spectrum.chat/graphql/general/recommendations-for-scale-able-graphql-folder-structure-nodejs~c3936202-f2df-47cc-af96-1d829d34f1d3)
 
-## Relational Model
+### Relational Model
 
 Do not have to use Mongoose `populate` for relational subdocument, can just search in that collection.
 
-## ID Typing
+### ID Typing
 
 Defining `_id` as `String` explicitly can seem easy, but it requires `default` value field manually set in Mongoose Schema.
 
 > Searching by `ObjectId` can be achieved by providing `String`
 
-## Handling ObjectId in GraphQL
+### Handling ObjectId in GraphQL
 
 To circumvent the error `ID cannot represent value: { _bsontype: \"ObjectID\"}` caused by having to define `_id` field as `ID` or `String` where it should be `ObjectId` in MongoDB, just define it as `String`, and add the following snippet to `app.js` to **override** the default behavior of Mongoose.
 
@@ -32,7 +34,7 @@ ObjectId.prototype.valueOf = function () {
 };
 ```
 
-## Resolver Coding
+### Resolver Coding
 
 When coding the **top-level** Query resolvers, which is **Root Resolvers**, the ***first*** argument should be `undefined`. Can note it as `_` or `root` (whatever).
 
@@ -50,7 +52,7 @@ Level: {
 }
 ```
 
-## Wiring Up
+### Wiring Up
 
 `makeExecutableSchema` can combine arrays of `typeDefs` and `resolvers` to create a schema, which can be later used in `ApolloServer` creation.
 
