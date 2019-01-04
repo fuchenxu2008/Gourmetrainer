@@ -66,6 +66,7 @@ export default class LevelSection extends Component {
 const styles = StyleSheet.create({
     levelSection: {
         marginBottom: 15,
+        minHeight: 10 / 25 * width + 20,
     },
     levelScroller: {
         flex: 1,

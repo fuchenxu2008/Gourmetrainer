@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         paddingTop: 70,
         borderRadius: 37,
         borderBottomRightRadius: 37,
-        marginBottom: '10%',
+        marginBottom: '7%',
     },
     heading: {
         fontSize: 40,

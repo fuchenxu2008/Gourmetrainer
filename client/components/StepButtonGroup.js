@@ -36,10 +36,10 @@ export default class StepButtonGroup extends Component {
 
 const styles = StyleSheet.create({
     stepButtonGroup: {
-        position: 'absolute',
-        bottom: '4%',
-        left: 0,
-        right: 0,
+        // position: 'absolute',
+        bottom: '5%',
+        // left: 0,
+        // right: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: '10%',
