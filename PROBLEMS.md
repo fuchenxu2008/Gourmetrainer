@@ -3,7 +3,7 @@
 ## Known Issues
 
 > 1. The application build is around 22Mb, because some modules from '**ExpoKit**' is used like Voice function, Icon and Gradient background. Besides, Expo aims to provide support for multiple SDK and OTA update which can allow clients to recieve latest update without reinstalling apk. These factors give rise to the oversize of build bundle.
-> 2. In cuisine learning page with multiple levels, the first time rendering may cause some layout error, multiple views stacking up on each other. Swiping back and re-enter the screen solve the issue. After lots of digging, it still cannot be addressed.
+> 2. ~~In cuisine learning page with multiple levels, the first time rendering may cause some layout error, multiple views stacking up on each other. Swiping back and re-enter the screen solve the issue. After lots of digging, it still cannot be addressed.~~[SOLVED]
 
 ## Lessons Learned
 
